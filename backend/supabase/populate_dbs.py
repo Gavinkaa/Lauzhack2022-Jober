@@ -23,11 +23,45 @@ def add_entries_to_seeker_table(supabase, nb_of_seekers):
 def add_entries_to_skill_table(supabase):
     pass
 
+def add_entries_to_level_table(supabase):
+    pass
+
+def add_entries_to_location_table(supabase):
+    pass
+
+def add_entries_to_company_table(supabase):
+    pass
+
+def add_entries_to_job_table(supabase):
+    pass
+
+# -------------- relational tables ----------------
+def add_entries_to_userskill_table(supabase):
+    pass
+
+def add_entries_to_userslevel_table(supabase):
+    pass
+
+def add_entries_to_userslocation_table(supabase):
+    pass
+
+def add_entries_to_companyskill_table(supabase):
+    pass
+
+def add_entries_to_companylevel_table(supabase):
+    pass
+
+def add_entries_to_companylocation_table(supabase):
+    pass
+
+
+
+
 def main():
     number_of_seekers = 10
     load_dotenv()
-    url: str = os.environ.get("SUPABASE_URL")
-    key: str = os.environ.get("SUPABASE_KEY")
+    url: str = os.environ.get('SUPABASE_URL')
+    key: str = os.environ.get('SUPABASE_KEY')
     supabase: Client = create_client(url, key)
     add_entries_to_seeker_table(supabase, number_of_seekers)
 
