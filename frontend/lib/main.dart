@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jober/src/ui/match/match_view_model.dart';
 import 'package:jober/src/ui/navigation/navigation_view_model.dart';
+import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,6 +19,7 @@ void main() async {
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => NavigationViewModel()),
       ChangeNotifierProvider(create: (_) => MatchViewModel()),
+      ChangeNotifierProvider(create: (_) => ProfileViewModel()),
     ], child: const MyApp()),
   );
 }

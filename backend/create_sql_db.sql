@@ -17,6 +17,9 @@ DROP TABLE SwapRight cascade;
 CREATE TABLE JobSeeker (
     EMAIL varchar NOT NULL,
     salary int,
+    firstname varchar,
+    lastname varchar,
+    age int,
     PRIMARY KEY (EMAIL)
 );
 
@@ -140,3 +143,20 @@ CREATE TABLE SwapRight (
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
     FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
+
+-- get all users from JobSeeker table
+CREATE OR REPLACE FUNCTION get_all_users()
+RETURNS TABLE (EMAIL varchar, salary int) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM JobSeeker;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- get all users with a skill of 'Java' from JobSeeker table
+CREATE OR REPLACE FUNCTION get_all_users_with_skill(skill varchar)
+RETURNS TABLE (EMAIL varchar, salary int) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM JobSeeker WHERE EMAIL IN (SELECT EMAIL FROM UserSkill WHERE skill = skill);
+END;
+$$ LANGUAGE plpgsql;

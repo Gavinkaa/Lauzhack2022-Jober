@@ -14,7 +14,10 @@ levels = ['Junior', 'Mid', 'Senior']
 Location = ['Ch', 'USA', 'FR']
 country = 'CH'
 postalCodes = [i for i in range(1000, 1004)]
-emails = [fake.email() for i in range(nSeeker)]
+emails = [fake.email() for _ in range(nSeeker)]
+names = [fake.name() for _ in range(nSeeker)]
+ages = [random.randint(18, 60) for _ in range(nSeeker)]
+# create fake users name list using faker
 salaries = [fake.random_int(3000, 10000) for i in range(nSeeker)]
 companies = ['Google', 'Facebook', 'Amazon', 'LauzHack']
 jobIds = [i for i in range(n_jobs)]
@@ -22,8 +25,10 @@ jobIds = [i for i in range(n_jobs)]
 
 def add_entries_to_seeker_table(supabase):
     for i in range(nSeeker):
+        firstname = names[i].split(' ')[0]
+        lastname = names[i].split(' ')[1]
         supabase.table('jobseeker').insert(
-            {'email': emails[i], 'salary': salaries[i]}).execute()
+            {'email': emails[i], 'salary': salaries[i], 'firstname': firstname, 'lastname': lastname, 'age': ages[i]}).execute()
 
 
 def add_entries_to_skill_table(supabase):
