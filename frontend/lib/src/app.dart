@@ -44,9 +44,7 @@ class MyApp extends StatelessWidget {
               case MatchView.routeName:
                 return MatchView();
               default:
-                return NavigationView(
-                  key: key,
-                );
+                return NavigationView(key: key,);
             }
           },
         );
