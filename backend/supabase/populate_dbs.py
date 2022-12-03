@@ -26,8 +26,8 @@ def add_entries_to_skill_table(supabase):
 def main():
     number_of_seekers = 10
     load_dotenv()
-    url: str = os.environ.get("SUPABASE_URL")
-    key: str = os.environ.get("SUPABASE_KEY")
+    url: str = os.environ.get('SUPABASE_URL')
+    key: str = os.environ.get('SUPABASE_KEY')
     supabase: Client = create_client(url, key)
     add_entries_to_seeker_table(supabase, number_of_seekers)
 
