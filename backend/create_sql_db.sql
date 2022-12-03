@@ -17,6 +17,9 @@ DROP TABLE SwapRight cascade;
 CREATE TABLE JobSeeker (
     EMAIL varchar NOT NULL,
     salary int,
+    firstname varchar,
+    lastname varchar,
+    age int,
     PRIMARY KEY (EMAIL)
 );
 
@@ -36,19 +39,27 @@ CREATE TABLE UserSkill (
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
---create a table for location which are strings
+--create a table for locations which string with country and postal code
 CREATE TABLE Location (
-    location varchar NOT NULL,
-    PRIMARY KEY (location)
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    PRIMARY KEY (country, postalCode)
 );
+
+--create a table for location which are strings
+-- CREATE TABLE Location (
+--     location varchar NOT NULL,
+--     PRIMARY KEY (location)
+-- );
 
 --create a table for the many-to-one relationship between users and locations
 CREATE TABLE UserLocation (
     EMAIL varchar NOT NULL,
-    location varchar NOT NULL,
-    PRIMARY KEY (EMAIL, location),
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    PRIMARY KEY (EMAIL, country, postalCode),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 --create a table for the level of experience which are strings
@@ -69,19 +80,20 @@ CREATE TABLE UserLevel (
 -- create a table for company. name is the primary key, it has a location
 CREATE TABLE Company (
     name varchar NOT NULL,
-    location varchar NOT NULL,
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
     PRIMARY KEY (name),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a Job table. JobId and company name forms the primary key. It has a location
 CREATE TABLE Job (
-    JobId int NOT NULL,
+    JobId INTEGER NOT NULL PRIMARY KEY,
     company varchar NOT NULL,
     name varchar NOT NULL,
-    location varchar NOT NULL,
-    PRIMARY KEY (JobId),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a table for the many-to-many relationship between jobs and skills
@@ -96,10 +108,11 @@ CREATE TABLE JobSkill (
 -- create a table for the many-to-one relationship between jobs and location
 CREATE TABLE JobLocation (
     JobId int NOT NULL,
-    location varchar NOT NULL,
-    PRIMARY KEY (JobId, location),
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    PRIMARY KEY (JobId, country, postalCode),
     FOREIGN KEY (JobId) REFERENCES Job(JobId),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a table for the many-to-one relationship between jobs and experience
@@ -118,7 +131,7 @@ CREATE TABLE Matching (
     company varchar NOT NULL,
     PRIMARY KEY (EMAIL, JobId),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company)
+    FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
 
 -- create a SwapRight table. It has a user email and Jobid are the primary key
@@ -128,5 +141,22 @@ CREATE TABLE SwapRight (
     company varchar NOT NULL,
     PRIMARY KEY (EMAIL, JobId),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company)
+    FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
+
+-- get all users from JobSeeker table
+CREATE OR REPLACE FUNCTION get_all_users()
+RETURNS TABLE (EMAIL varchar, salary int) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM JobSeeker;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- get all users with a skill of 'Java' from JobSeeker table
+CREATE OR REPLACE FUNCTION get_all_users_with_skill(skill varchar)
+RETURNS TABLE (EMAIL varchar, salary int) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM JobSeeker WHERE EMAIL IN (SELECT EMAIL FROM UserSkill WHERE skill = skill);
+END;
+$$ LANGUAGE plpgsql;
