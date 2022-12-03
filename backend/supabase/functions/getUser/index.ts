@@ -23,7 +23,15 @@ serve(async (req) => {
       { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
     )
 
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser()
+
+    console.log(user)
+    
     const { data, error } = await supabaseClient.from('jobseeker').select('*')
+    
+    
     if (error) throw error
 
     const contents = data
