@@ -45,7 +45,7 @@ def add_entries_to_skill_table(supabase):
 
 def add_entries_to_level_table(supabase):
     for level in levels:
-        supabase.table('level').insert({'level': level})
+        supabase.table('level').insert({'level': level}).execute()
 
 
 def add_entries_to_location_table(supabase):
@@ -65,9 +65,6 @@ def add_entries_to_job_table(supabase):
     for i in range(n_jobs):
         company = random.choice(companies)
         location = random.choice(Location)
-        skill = random.choice(skills)
-        level = random.choice(levels)
-        salary = random.choice(salaries)
         supabase.table('job').insert({'jobid': i, 'company': company,
                                       'name': "name", 'location' : location}).execute()
 
@@ -95,7 +92,7 @@ def add_entries_to_userslevel_table(supabase):
 def add_entries_to_userslocation_table(supabase):
     for email in emails:
         location = random.choice(Location)
-        supabase.table('userlevel').insert(
+        supabase.table('userlocation').insert(
             {'email': email, 'location': location}).execute()
 
 
@@ -132,10 +129,16 @@ def main():
     add_entries_to_skill_table(supabase)
     add_entries_to_level_table(supabase)
     add_entries_to_location_table(supabase)
+
     add_entries_to_company_table(supabase)
     add_entries_to_job_table(supabase)
     add_entries_to_userskill_table(supabase)
-
+    
+    add_entries_to_userslevel_table(supabase)
+    add_entries_to_userslocation_table(supabase)
+    add_entries_to_jobskill_table(supabase)
+    add_entries_to_joblevel_table(supabase)
+    add_entries_to_joblocation_table(supabase)
 
 if __name__ == '__main__':
     main()
