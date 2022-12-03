@@ -23,7 +23,21 @@ serve(async (req) => {
       { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
     )
 
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser()
+
+    console.log(user)
+    if(!user) {
+      return new Response(JSON.stringify({ error: 'User not connected', error_code : 'user-not-connected' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      })
+    }
+    
     const { data, error } = await supabaseClient.from('jobseeker').select('*')
+    
+    
     if (error) throw error
 
     const contents = data

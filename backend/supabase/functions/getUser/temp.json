@@ -1,0 +1,15 @@
+{"currentSession":{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJh
+dXRoZW50aWNhdGVkIiwiZXhwIjoxNjcwMTAzNDQwLCJzdWIiOiI5MTMxZGQxNC03MGZiLTRjYzYtOGExOC1h
+YTIxMjJkNTRjZDMiLCJlbWFpbCI6InN1cGFiYXNlX2ljaV9jYV90ZXN0QG15YnVybmllci5jaCIsInBob25l
+IjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0s
+InVzZXJfbWV0YWRhdGEiOnt9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7
+Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNjcwMDk5ODQwfV0sInNlc3Npb25faWQiOiJmZTcw
+ODlmMC1jYjQ1LTQxNmYtOGYzYS1mYTRlM2EyZjA4MTcifQ.4oBHvvKBR5oL0Y6REAH9t4qk1pRH8YTuqgmG3
+wkztxY","expires_in":3600,"refresh_token":"0Aw3V-cv9qYyGnICtAK6MQ","token_type":"bea
+rer","provider_token":null,"user":{"id":"9131dd14-70fb-4cc6-8a18-aa2122d54cd3","app_
+metadata":{"provider":"email","providers":["email"]},"user_metadata":{},"aud":"authe
+nticated","email":"supabase_ici_ca_test@myburnier.ch","phone":"","created_at":"2022-
+12-03T17:36:10.225218Z","confirmed_at":"2022-12-03T17:36:56.110475Z","email_confirme
+d_at":"2022-12-03T17:36:56.110475Z","phone_confirmed_at":null,"last_sign_in_at":"202
+2-12-03T20:37:20.209160398Z","role":"authenticated","updated_at":"2022-12-03T20:37:2
+0.211242Z"}},"expiresAt":1670103440}
