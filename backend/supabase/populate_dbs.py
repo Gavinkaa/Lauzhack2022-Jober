@@ -40,17 +40,17 @@ def add_entries_to_seeker_table(supabase):
 
 def add_entries_to_skill_table(supabase):
     for skill in skills:
-        supabase.table('skill').insert({'name': skill}).execute()
+        supabase.table('skill').insert({'skill': skill}).execute()
 
 
 def add_entries_to_level_table(supabase):
     for level in levels:
-        supabase.table('level').insert({'name': level})
+        supabase.table('level').insert({'level': level})
 
 
 def add_entries_to_location_table(supabase):
     for location in Location:
-        supabase.table('location').insert({'name': location}).execute()
+        supabase.table('location').insert({'location': location}).execute()
 
 
 def add_entries_to_company_table(supabase):
@@ -68,19 +68,21 @@ def add_entries_to_job_table(supabase):
         skill = random.choice(skills)
         level = random.choice(levels)
         salary = random.choice(salaries)
-        supabase.table('job').insert({'company': company, 'location': location,
-                                      'skill': skill, 'level': level, 'salary': salary}).execute()
+        supabase.table('job').insert({'jobid': i, 'company': company,
+                                      'name': "name", 'location' : location}).execute()
 
 # -------------- relational tables ----------------
 
 
 def add_entries_to_userskill_table(supabase):
-    for email in emails:
+    count = 0
+    for _, email in enumerate(emails):
         # create a set of random skills between 1 and 3
-        skills = random.sample(skills, random.randint(1, 3))
-        for skill in skills:
+        _skills = random.sample(skills, random.randint(1, 3))
+        for _, skill in enumerate(_skills):
             supabase.table('userskill').insert(
-                {'email': email, 'skill': skill}).execute()
+                {'email': email, 'skill': skill, 'id' : count}).execute()
+            count += 1
 
 
 def add_entries_to_userslevel_table(supabase):
@@ -92,15 +94,15 @@ def add_entries_to_userslevel_table(supabase):
 
 def add_entries_to_userslocation_table(supabase):
     for email in emails:
-        location = random.choice(Locations)
+        location = random.choice(Location)
         supabase.table('userlevel').insert(
             {'email': email, 'location': location}).execute()
 
 
 def add_entries_to_jobskill_table(supabase):
     for job_id in jobIds:
-        skills = random.sample(skills, random.randint(1, 3))
-        for skill in skills:
+        _skills = random.sample(skills, random.randint(1, 3))
+        for skill in _skills:
             supabase.table('jobskill').insert(
                 {'jobid': job_id, 'skill': skill}).execute()
 
@@ -125,7 +127,7 @@ def main():
     url: str = os.environ.get('SUPABASE_URL')
     key: str = os.environ.get('SUPABASE_KEY')
     supabase: Client = create_client(url, key)
-    add_entries_to_seeker_table(supabase, number_of_seekers)
+    add_entries_to_seeker_table(supabase)
     # add all the entries
     add_entries_to_skill_table(supabase)
     add_entries_to_level_table(supabase)
