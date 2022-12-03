@@ -12,25 +12,13 @@ n_jobs = 10
 skills = ['Java', 'Flutter', 'Dart']
 levels = ['Junior', 'Mid', 'Senior']
 Location = ['Ch', 'USA', 'FR']
+country = 'CH'
+postalCodes = [i for i in range(1000, 1004)]
 emails = [fake.email() for i in range(nSeeker)]
 salaries = [fake.random_int(3000, 10000) for i in range(nSeeker)]
 companies = ['Google', 'Facebook', 'Amazon', 'LauzHack']
 jobIds = [i for i in range(n_jobs)]
 
-
-# def add_entries_to_seeker_table(supabase, nb_of_seekers):
-#    fake = Faker()
-#    foreign_key_list = []
-#    fake.add_provider(faker_commerce.Provider)
-#    main_list = []
-#    for i in range(nb_of_seekers):
-#        value = {'email': fake.email(), 'salary': fake.random_int(40, 169)}
-#        main_list.append(value)
-#    data = supabase.table('jobseeker').insert(main_list).execute()
-#    data_json = json.loads(data.json())
-#    data_entries = data_json['data']
-#    print(data_entries)
-#    return
 
 def add_entries_to_seeker_table(supabase):
     for i in range(nSeeker):
@@ -49,24 +37,30 @@ def add_entries_to_level_table(supabase):
 
 
 def add_entries_to_location_table(supabase):
-    for location in Location:
-        supabase.table('location').insert({'location': location}).execute()
+    # only generate location for Switzerland atm
+    for postalCode in postalCodes:
+        supabase.table('location').insert(
+            {'country': country, 'postalcode': postalCode}).execute()
+
+    # for location in Location:
+    #    supabase.table('location').insert({'location': location}).execute()
 
 
 def add_entries_to_company_table(supabase):
     # iterate over companies and select a random location
     for company in companies:
-        location = random.choice(Location)
+        postalCode = random.choice(postalCodes)
         supabase.table('company').insert(
-            {'name': company, 'location': location}).execute()
+            {'name': company, 'country': country, 'postalcode': postalCode}).execute()
+        # {'name': company, 'location': location}).execute()
 
 
 def add_entries_to_job_table(supabase):
     for i in range(n_jobs):
         company = random.choice(companies)
-        location = random.choice(Location)
+        postalCode = random.choice(postalCodes)
         supabase.table('job').insert({'jobid': i, 'company': company,
-                                      'name': "name", 'location' : location}).execute()
+                                      'name': 'find job name', 'country': country, 'postalcode': postalCode}).execute()
 
 # -------------- relational tables ----------------
 
@@ -78,7 +72,7 @@ def add_entries_to_userskill_table(supabase):
         _skills = random.sample(skills, random.randint(1, 3))
         for _, skill in enumerate(_skills):
             supabase.table('userskill').insert(
-                {'email': email, 'skill': skill, 'id' : count}).execute()
+                {'email': email, 'skill': skill, 'id': count}).execute()
             count += 1
 
 
@@ -91,9 +85,9 @@ def add_entries_to_userslevel_table(supabase):
 
 def add_entries_to_userslocation_table(supabase):
     for email in emails:
-        location = random.choice(Location)
+        postalCode = random.choice(postalCodes)
         supabase.table('userlocation').insert(
-            {'email': email, 'location': location}).execute()
+            {'email': email, 'country': country, 'postalcode': postalCode}).execute()
 
 
 def add_entries_to_jobskill_table(supabase):
@@ -113,9 +107,9 @@ def add_entries_to_joblevel_table(supabase):
 
 def add_entries_to_joblocation_table(supabase):
     for job_id in jobIds:
-        location = random.choice(Location)
+        postalCode = random.choice(postalCodes)
         supabase.table('joblocation').insert(
-            {'jobid': job_id, 'location': location}).execute()
+            {'jobid': job_id, 'country': country, 'postalcode': postalCode}).execute()
 
 
 def main():
@@ -133,12 +127,13 @@ def main():
     add_entries_to_company_table(supabase)
     add_entries_to_job_table(supabase)
     add_entries_to_userskill_table(supabase)
-    
+
     add_entries_to_userslevel_table(supabase)
     add_entries_to_userslocation_table(supabase)
     add_entries_to_jobskill_table(supabase)
     add_entries_to_joblevel_table(supabase)
     add_entries_to_joblocation_table(supabase)
+
 
 if __name__ == '__main__':
     main()
