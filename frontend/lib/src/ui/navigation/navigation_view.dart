@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jober/src/ui/profile/profile_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class NavigationView extends StatelessWidget {
   const NavigationView({Key? key}) : super(key: key);
@@ -19,31 +20,37 @@ class NavigationView extends StatelessWidget {
 
     return Scaffold(
       body: _buildBody(viewModel),
-      bottomNavigationBar: CurvedNavigationBar(
-        index: viewModel.currentIndex,
-        color: Theme.of(context).extension<AppColors>()!.bottomAppBarColor!,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        items: [
-          CurvedNavigationBarItem(
-            child: Icon(Icons.person, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
-            label: AppLocalizations.of(context)!.profile,
-            labelStyle: TextStyle(color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
-          ),
-          CurvedNavigationBarItem(
-            child: Icon(Icons.flash_on, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
-            label: AppLocalizations.of(context)!.match,
-            labelStyle: TextStyle(color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
-          ),
-          CurvedNavigationBarItem(
-            child: Icon(Icons.chat, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
-            label: AppLocalizations.of(context)!.chat,
-            labelStyle: TextStyle(color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
-          ),
-        ],
-        onTap: (index) {
-          viewModel.changeIndex(index);
-        },
-      ),
+      bottomNavigationBar: kIsWeb ? _buildWebNavBar(viewModel, context) : _buildNavBar(viewModel, context),
+    );
+  }
+
+  Widget _buildNavBar(NavigationViewModel viewModel, BuildContext context) {
+    return CurvedNavigationBar(
+      index: viewModel.currentIndex,
+      color: Theme.of(context).extension<AppColors>()!.bottomAppBarColor!,
+      backgroundColor: Theme
+          .of(context)
+          .scaffoldBackgroundColor,
+      items: [
+        CurvedNavigationBarItem(
+          child: Icon(Icons.person, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
+          label: AppLocalizations.of(context)!.profile,
+          labelStyle: TextStyle(color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
+        ),
+        CurvedNavigationBarItem(
+          child: Icon(Icons.flash_on, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
+          label: AppLocalizations.of(context)!.match,
+          labelStyle: TextStyle(color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
+        ),
+        CurvedNavigationBarItem(
+          child: Icon(Icons.chat, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
+          label: AppLocalizations.of(context)!.chat,
+          labelStyle: TextStyle(color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
+        ),
+      ],
+      onTap: (index) {
+        viewModel.changeIndex(index);
+      },
     );
   }
 
@@ -58,5 +65,29 @@ class NavigationView extends StatelessWidget {
       default:
         return Container();
     }
+  }
+
+  Widget _buildWebNavBar(NavigationViewModel viewModel, BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: viewModel.currentIndex,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: AppLocalizations.of(context)!.profile,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.flash_on),
+          label: AppLocalizations.of(context)!.match,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.chat),
+          label: AppLocalizations.of(context)!.chat,
+        ),
+      ],
+      onTap: (index) {
+        viewModel.changeIndex(index);
+      },
+    );
   }
 }
