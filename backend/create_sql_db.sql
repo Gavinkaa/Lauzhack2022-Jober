@@ -1,3 +1,19 @@
+-- remove all value from the table
+DROP TABLE JobSeeker cascade;
+DROP TABLE Skill cascade;
+DROP TABLE UserSkill cascade;
+DROP TABLE Location cascade;
+DROP TABLE UserLocation cascade;
+DROP TABLE Level cascade;
+DROP TABLE UserLevel cascade;
+DROP TABLE Company cascade;
+DROP TABLE Job cascade;
+DROP TABLE JobSkill cascade;
+DROP TABLE JobLocation cascade;
+DROP TABLE JobLevel cascade;
+DROP TABLE Matching cascade;
+DROP TABLE SwapRight cascade;
+
 CREATE TABLE JobSeeker (
     EMAIL varchar NOT NULL,
     salary int,
@@ -10,11 +26,12 @@ CREATE TABLE Skill (
     PRIMARY KEY (skill)
 );
 
---create a table for the many-to-many relationship between users and skills
+--create a table for the many-to-one relationship between users and skills
 CREATE TABLE UserSkill (
+    id int NOT NULL,
     EMAIL varchar NOT NULL,
     skill varchar NOT NULL,
-    PRIMARY KEY (EMAIL, skill),
+    PRIMARY KEY (id),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
@@ -60,41 +77,37 @@ CREATE TABLE Company (
 -- create a Job table. JobId and company name forms the primary key. It has a location
 CREATE TABLE Job (
     JobId int NOT NULL,
-    name varchar NOT NULL,
     company varchar NOT NULL,
+    name varchar NOT NULL,
     location varchar NOT NULL,
-    PRIMARY KEY (JobId, company),
-    FOREIGN KEY (company) REFERENCES Company(name),
+    PRIMARY KEY (JobId),
     FOREIGN KEY (location) REFERENCES Location(location)
 );
 
 -- create a table for the many-to-many relationship between jobs and skills
 CREATE TABLE JobSkill (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     skill varchar NOT NULL,
-    PRIMARY KEY (JobId, company, skill),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, skill),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
 -- create a table for the many-to-one relationship between jobs and location
 CREATE TABLE JobLocation (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     location varchar NOT NULL,
-    PRIMARY KEY (JobId, company, location),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, location),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (location) REFERENCES Location(location)
 );
 
 -- create a table for the many-to-one relationship between jobs and experience
 CREATE TABLE JobLevel (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     level varchar NOT NULL,
-    PRIMARY KEY (JobId, company, level),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, level),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (level) REFERENCES Level(level)
 );
 
