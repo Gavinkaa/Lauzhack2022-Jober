@@ -38,15 +38,13 @@ class MyApp extends StatelessWidget {
           builder: (BuildContext context) {
             switch (routeSettings.name) {
               case ProfileView.routeName:
-                return ProfileView();
+                return ProfileView(key: key,);
               case NavigationView.routeName:
-                return ProfileView();
+                return NavigationView(key: key,);
               case MatchView.routeName:
-                return MatchView();
+                return MatchView(key: key,);
               default:
-                return NavigationView(
-                  key: key,
-                );
+                return NavigationView(key: key,);
             }
           },
         );
