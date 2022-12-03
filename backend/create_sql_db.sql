@@ -36,19 +36,27 @@ CREATE TABLE UserSkill (
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
---create a table for location which are strings
+--create a table for locations which string with country and postal code
 CREATE TABLE Location (
-    location varchar NOT NULL,
-    PRIMARY KEY (location)
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    PRIMARY KEY (country, postalCode)
 );
+
+--create a table for location which are strings
+-- CREATE TABLE Location (
+--     location varchar NOT NULL,
+--     PRIMARY KEY (location)
+-- );
 
 --create a table for the many-to-one relationship between users and locations
 CREATE TABLE UserLocation (
     EMAIL varchar NOT NULL,
-    location varchar NOT NULL,
-    PRIMARY KEY (EMAIL, location),
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    PRIMARY KEY (EMAIL, country, postalCode),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 --create a table for the level of experience which are strings
@@ -69,49 +77,47 @@ CREATE TABLE UserLevel (
 -- create a table for company. name is the primary key, it has a location
 CREATE TABLE Company (
     name varchar NOT NULL,
-    location varchar NOT NULL,
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
     PRIMARY KEY (name),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a Job table. JobId and company name forms the primary key. It has a location
 CREATE TABLE Job (
-    JobId int NOT NULL,
-    name varchar NOT NULL,
+    JobId INTEGER NOT NULL PRIMARY KEY,
     company varchar NOT NULL,
-    location varchar NOT NULL,
-    PRIMARY KEY (JobId, company),
-    FOREIGN KEY (company) REFERENCES Company(name),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    name varchar NOT NULL,
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a table for the many-to-many relationship between jobs and skills
 CREATE TABLE JobSkill (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     skill varchar NOT NULL,
-    PRIMARY KEY (JobId, company, skill),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, skill),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
 -- create a table for the many-to-one relationship between jobs and location
 CREATE TABLE JobLocation (
     JobId int NOT NULL,
-    company varchar NOT NULL,
-    location varchar NOT NULL,
-    PRIMARY KEY (JobId, company, location),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
-    FOREIGN KEY (location) REFERENCES Location(location)
+    country varchar NOT NULL,
+    postalCode int NOT NULL,
+    PRIMARY KEY (JobId, country, postalCode),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
+    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a table for the many-to-one relationship between jobs and experience
 CREATE TABLE JobLevel (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     level varchar NOT NULL,
-    PRIMARY KEY (JobId, company, level),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, level),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (level) REFERENCES Level(level)
 );
 
@@ -122,7 +128,7 @@ CREATE TABLE Matching (
     company varchar NOT NULL,
     PRIMARY KEY (EMAIL, JobId),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company)
+    FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
 
 -- create a SwapRight table. It has a user email and Jobid are the primary key
@@ -132,5 +138,5 @@ CREATE TABLE SwapRight (
     company varchar NOT NULL,
     PRIMARY KEY (EMAIL, JobId),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company)
+    FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
