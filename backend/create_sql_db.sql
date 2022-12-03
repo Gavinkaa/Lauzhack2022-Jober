@@ -1,3 +1,19 @@
+-- remove all value from the table
+DROP TABLE JobSeeker cascade;
+DROP TABLE Skill cascade;
+DROP TABLE UserSkill cascade;
+DROP TABLE Location cascade;
+DROP TABLE UserLocation cascade;
+DROP TABLE Level cascade;
+DROP TABLE UserLevel cascade;
+DROP TABLE Company cascade;
+DROP TABLE Job cascade;
+DROP TABLE JobSkill cascade;
+DROP TABLE JobLocation cascade;
+DROP TABLE JobLevel cascade;
+DROP TABLE Matching cascade;
+DROP TABLE SwapRight cascade;
+
 CREATE TABLE JobSeeker (
     EMAIL varchar NOT NULL,
     salary int,
@@ -10,11 +26,12 @@ CREATE TABLE Skill (
     PRIMARY KEY (skill)
 );
 
---create a table for the many-to-many relationship between users and skills
+--create a table for the many-to-one relationship between users and skills
 CREATE TABLE UserSkill (
+    id int NOT NULL,
     EMAIL varchar NOT NULL,
     skill varchar NOT NULL,
-    PRIMARY KEY (EMAIL, skill),
+    PRIMARY KEY (id),
     FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
