@@ -77,41 +77,37 @@ CREATE TABLE Company (
 -- create a Job table. JobId and company name forms the primary key. It has a location
 CREATE TABLE Job (
     JobId int NOT NULL,
-    name varchar NOT NULL,
     company varchar NOT NULL,
+    name varchar NOT NULL,
     location varchar NOT NULL,
-    PRIMARY KEY (JobId, company),
-    FOREIGN KEY (company) REFERENCES Company(name),
+    PRIMARY KEY (JobId),
     FOREIGN KEY (location) REFERENCES Location(location)
 );
 
 -- create a table for the many-to-many relationship between jobs and skills
 CREATE TABLE JobSkill (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     skill varchar NOT NULL,
-    PRIMARY KEY (JobId, company, skill),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, skill),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
 -- create a table for the many-to-one relationship between jobs and location
 CREATE TABLE JobLocation (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     location varchar NOT NULL,
-    PRIMARY KEY (JobId, company, location),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, location),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (location) REFERENCES Location(location)
 );
 
 -- create a table for the many-to-one relationship between jobs and experience
 CREATE TABLE JobLevel (
     JobId int NOT NULL,
-    company varchar NOT NULL,
     level varchar NOT NULL,
-    PRIMARY KEY (JobId, company, level),
-    FOREIGN KEY (JobId, company) REFERENCES Job(JobId, company),
+    PRIMARY KEY (JobId, level),
+    FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (level) REFERENCES Level(level)
 );
 
