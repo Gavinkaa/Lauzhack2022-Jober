@@ -82,12 +82,16 @@ class _TinderCardState extends State<TinderCard> {
     borderRadius: BorderRadius.circular(20),
     child: Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: widget.job.imageUrl.contains("assets") ? AssetImage(widget.job.imageUrl) as ImageProvider
-                  : NetworkImage(widget.job.imageUrl),
-              fit: BoxFit.cover,
+        Hero(
+          transitionOnUserGestures: true,
+          tag: widget.job.hashCode,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: widget.job.imageUrl.contains("assets") ? AssetImage(widget.job.imageUrl) as ImageProvider
+                    : NetworkImage(widget.job.imageUrl),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

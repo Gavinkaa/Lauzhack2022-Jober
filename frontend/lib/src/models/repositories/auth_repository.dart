@@ -68,5 +68,10 @@ class AuthRepository {
         firstName: 'FirstName', lastName: 'LastName', email: 'Email');
   }
 
+  void getUserAs() async {
+    final response = await supabaseClient.functions.invoke('getUser');
+    print(response.data['error_code']);
+  }
+
   User? get user => _user;
 }

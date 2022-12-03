@@ -1,53 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:jober/src/models/data/job.dart';
+import 'package:jober/src/ui/match_detail/match_detail_view_model.dart';
+import 'package:palette_generator/palette_generator.dart';
 
-class MatchDetailView extends StatelessWidget {
-  const MatchDetailView({Key? key}) : super(key: key);
+
+class MatchDetailView extends StatefulWidget {
+  Job job;
+  MatchDetailView({Key? key, required this.job}) : super(key: key);
+
+  @override
+  State<MatchDetailView> createState() => _MatchDetailViewState();
+}
+
+class _MatchDetailViewState extends State<MatchDetailView> {
+  PaletteGenerator? _paletteGenerator;
+  final _viewModel = MatchDetailViewModel();
+
+
+  @override
+  void initState() {
+    super.initState();
+    getPalette();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        controller: _viewModel.scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                expandedHeight: 200.0,
+                expandedHeight: 400.0,
                 floating: true,
                 pinned: true,
-                snap: true,
-                actionsIconTheme: IconThemeData(opacity: 0.0),
-                flexibleSpace: Stack(
-                  children: <Widget>[
-                    Positioned.fill(
-                        child: Image.network(
-                          "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
-                          fit: BoxFit.cover,
-                        ))
-                  ],
-                ),
-              ),
-              SliverPadding(
-                padding: new EdgeInsets.all(16.0),
-                sliver: new SliverList(
-                  delegate: new SliverChildListDelegate([
-                    TabBar(
-                      labelColor: Colors.black87,
-                      unselectedLabelColor: Colors.grey,
-                      tabs: [
-                        new Tab(icon: new Icon(Icons.info), text: "Tab 1"),
-                        new Tab(
-                            icon: new Icon(Icons.lightbulb_outline),
-                            text: "Tab 2"),
+                backgroundColor: _paletteGenerator?.dominantColor?.color,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Hero(
+                    tag: widget.job.hashCode,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(child: widget.job.imageUrl.contains("assets") ? Image.asset(widget.job.imageUrl, fit: BoxFit.cover)
+                            : Image.network(widget.job.imageUrl, fit: BoxFit.cover),),
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.8),
+                              ],
+                              stops: const [0.8, 1.0],
+                            )
+                          ),
+                        )
                       ],
                     ),
-                  ]),
-                ),
+                  ),
+                  title: Text(widget.job.name),
+                  centerTitle: true,
+                  collapseMode: CollapseMode.parallax,
+                )
               ),
             ];
           },
           body: Center(
-            child: Text("Sample text"),
+            child: Text("TODO IMPLEMENTS"),
           ),
       ),
     );
+  }
+
+  void getPalette() async {
+    PaletteGenerator.fromImageProvider(
+      widget.job.imageUrl.contains("assets") ? Image.asset(widget.job.imageUrl).image : Image.network(widget.job.imageUrl).image
+    ).then((value) =>
+      setState(() => _paletteGenerator = value)
+    );
+  }
+
+  @override
+  void dispose() {
+    _viewModel.disposeController();
+    super.dispose();
   }
 }

@@ -39,9 +39,14 @@ class MatchView extends StatelessWidget {
       ),
     )
         : Stack(
-      children: jobs.map((job) => TinderCard(
-          job: job,
-          isFront: jobs.last == job
+      children: jobs.map((job) => GestureDetector(
+        onTap: () {
+          viewModel.navigateToDetail(context, job);
+        },
+        child: TinderCard(
+            job: job,
+            isFront: jobs.last == job
+        ),
       )).toList(),
     );
   }
