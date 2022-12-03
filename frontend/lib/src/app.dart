@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jober/src/ui/match/match_view.dart';
+import 'package:jober/src/ui/match_detail/match_detail_view.dart';
 import 'package:jober/src/ui/navigation/navigation_view.dart';
 import 'package:jober/src/ui/profile/profile_view.dart';
 import 'package:jober/src/ui/theme/app_theme.dart';

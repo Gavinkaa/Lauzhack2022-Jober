@@ -39,4 +39,8 @@ class ProfileViewModel extends ChangeNotifier {
     _userProfile = await _authRepository.getUser();
     notifyListeners();
   }
+
+  void getUserAs() {
+    _authRepository.getUserAs();
+  }
 }

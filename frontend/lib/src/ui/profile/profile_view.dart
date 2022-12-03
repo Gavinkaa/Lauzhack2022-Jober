@@ -22,6 +22,10 @@ class ProfileView extends StatelessWidget {
                     onPressed: () => viewModel.signOut(),
                     child: Text("SIGN OUT"),
                   ),
+            ElevatedButton(
+              onPressed: () => viewModel.getUserAs(),
+              child: Text("YOLO"),
+            ),
                 ]
               : [
                   ElevatedButton(
@@ -34,6 +38,10 @@ class ProfileView extends StatelessWidget {
                         'supabase_ICI_CA_TEST@myburnier.ch', '12345678901'),
                     child: Text("SIGN IN"),
                   ),
+            ElevatedButton(
+              onPressed: () => viewModel.getUserAs(),
+              child: Text("YOLO"),
+            ),
                 ],
         ),
       ),

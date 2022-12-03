@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:jober/src/models/data/job.dart';
+import 'package:jober/src/ui/match_detail/match_detail_view.dart';
 
 enum CardStatus { like, dislike, superLike }
 
@@ -93,8 +94,8 @@ class MatchViewModel extends ChangeNotifier {
   void resetUsers() {
     _jobs = <Job>[
           Job(name: "Name", description: "A very long descriptions that contains a lot of informations, A very long descriptions that contains a lot of informations !", level: "Level", location: "Location", skills: ["Skill1", "Skill2", "Skill3"]),
-          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"]),
-          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"]),
+          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"], imageUrl: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwd29ya2luZyUyMG9uJTIwY29tcHV0ZXJ8ZW58MHx8MHx8&w=1000&q=80"),
+          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"], imageUrl: "https://images.unsplash.com/photo-1622151834677-70f982c9adef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwd29ya2luZ3xlbnwwfHwwfHw%3D&w=1000&q=80"),
           Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"]),
           Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"]),
           ].reversed.toList();
@@ -131,5 +132,9 @@ class MatchViewModel extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 200));
     _jobs.removeLast();
     resetPosition();
+  }
+
+  void navigateToDetail(BuildContext context, Job job) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MatchDetailView(job: job)));
   }
 }
