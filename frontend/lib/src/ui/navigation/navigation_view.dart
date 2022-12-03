@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jober/src/ui/match/match_view.dart';
 import 'package:jober/src/ui/navigation/navigation_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jober/src/ui/profile/profile_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,7 @@ class NavigationView extends StatelessWidget {
   Widget _buildBody(NavigationViewModel viewModel) {
     switch (viewModel.currentIndex) {
       case 0:
-        return Container();
+        return ProfileView();
       case 1:
         return MatchView();
       case 2:
