@@ -72,7 +72,7 @@ serve(async (req) => {
       location: locations[0]
     }
 
-    return new Response(JSON.stringify({ contents }), {
+    return new Response(JSON.stringify(contents), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
