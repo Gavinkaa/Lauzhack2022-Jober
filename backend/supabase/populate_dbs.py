@@ -5,10 +5,14 @@ from supabase import create_client, Client
 from faker import Faker
 import faker_commerce
 import random
+import uuid
 
 fake = Faker()
-nSeeker = 10
-n_jobs = 10
+# nSeeker = 10
+nSeeker = 3
+n_jobs = 6
+users_uuid = ['dc52141d-892e-4928-9c15-db593d1cb6b6',
+              '94af9887-41ae-4544-8a54-6d65a07e836d', '6ed55cde-0ac9-4bad-a7ed-b760531d599b']
 skills = ['Java', 'Flutter', 'Dart']
 levels = ['Junior', 'Mid', 'Senior']
 Location = ['Ch', 'USA', 'FR']
@@ -28,7 +32,7 @@ def add_entries_to_seeker_table(supabase):
         firstname = names[i].split(' ')[0]
         lastname = names[i].split(' ')[1]
         supabase.table('jobseeker').insert(
-            {'email': emails[i], 'salary': salaries[i], 'firstname': firstname, 'lastname': lastname, 'age': ages[i]}).execute()
+            {'id': users_uuid[i], 'email': emails[i], 'salary': salaries[i], 'firstname': firstname, 'lastname': lastname, 'age': ages[i]}).execute()
 
 
 def add_entries_to_skill_table(supabase):
@@ -46,9 +50,6 @@ def add_entries_to_location_table(supabase):
     for postalCode in postalCodes:
         supabase.table('location').insert(
             {'country': country, 'postalcode': postalCode}).execute()
-
-    # for location in Location:
-    #    supabase.table('location').insert({'location': location}).execute()
 
 
 def add_entries_to_company_table(supabase):
@@ -72,27 +73,27 @@ def add_entries_to_job_table(supabase):
 
 def add_entries_to_userskill_table(supabase):
     count = 0
-    for _, email in enumerate(emails):
+    for i, uuid in enumerate(users_uuid):
         # create a set of random skills between 1 and 3
         _skills = random.sample(skills, random.randint(1, 3))
         for _, skill in enumerate(_skills):
             supabase.table('userskill').insert(
-                {'email': email, 'skill': skill, 'id': count}).execute()
+                {'userid': uuid, 'id': count, 'skill': skill}).execute()
             count += 1
 
 
 def add_entries_to_userslevel_table(supabase):
-    for email in emails:
+    for uuid in users_uuid:
         level = random.choice(levels)
         supabase.table('userlevel').insert(
-            {'email': email, 'level': level}).execute()
+            {'userid': uuid, 'level': level}).execute()
 
 
 def add_entries_to_userslocation_table(supabase):
-    for email in emails:
+    for uuid in users_uuid:
         postalCode = random.choice(postalCodes)
         supabase.table('userlocation').insert(
-            {'email': email, 'country': country, 'postalcode': postalCode}).execute()
+            {'userid': uuid, 'country': country, 'postalcode': postalCode}).execute()
 
 
 def add_entries_to_jobskill_table(supabase):
