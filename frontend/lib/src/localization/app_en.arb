@@ -25,4 +25,6 @@
 	"dontHaveAnAccount": "Don't have an Account ?",
 	"age": "Age",
 	"salary": "Salary"
+	"waitingForAnswer": "Waiting for an answer",
+	"job": "Job"
 }
