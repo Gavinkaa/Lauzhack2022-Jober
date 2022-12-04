@@ -6,23 +6,11 @@ import 'package:jober/src/ui/welcome/welcome_view.dart';
 class ProfileViewModel extends ChangeNotifier {
   final _authRepository = AuthRepository.getInstance();
 
-  Future<void> signUp(String email, String password) async {
-    await _authRepository.signUp(email, password);
-    notifyListeners();
-  }
-
-  Future<void> signIn(String email, String password) async {
-    await _authRepository.signIn(email, password);
-    notifyListeners();
-  }
-
   Future<void> signOut(BuildContext context) async {
     await _authRepository.signOut();
     Navigator.pushNamedAndRemoveUntil(context, WelcomeView.routeName, (route) => false);
     notifyListeners();
   }
-
-  // NEW VERSION
 
   bool _editMode = false;
 
@@ -43,14 +31,6 @@ class ProfileViewModel extends ChangeNotifier {
       await _authRepository.fetchUser();
     }
   }
-  // void getUser() {
-  //   final userProfile = _authRepository.getUser();
-
-  //   if (_userProfile != userProfile) {
-  //     _userProfile = userProfile;
-  //     notifyListeners();
-  //   }
-  // }
 
   set userFirstName(String firstName) {
     _authRepository.userProfile!.firstName = firstName;
@@ -59,6 +39,16 @@ class ProfileViewModel extends ChangeNotifier {
 
   set userLastName(String lastName) {
     _authRepository.userProfile!.lastName = lastName;
+    notifyListeners();
+  }
+
+  set userAge(int age) {
+    _authRepository.userProfile!.age = age;
+    notifyListeners();
+  }
+
+  set userSalary(int salary) {
+    _authRepository.userProfile!.salary = salary;
     notifyListeners();
   }
 
@@ -77,6 +67,20 @@ class ProfileViewModel extends ChangeNotifier {
   String? validateLastName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your last name';
+    }
+    return null;
+  }
+
+  String? validateAge(String? value) {
+    if (value == null || value.isEmpty || int.tryParse(value) == null) {
+      return 'Please enter your age';
+    }
+    return null;
+  }
+
+  String? validateSalary(String? value) {
+    if (value == null || value.isEmpty || int.tryParse(value) == null) {
+      return 'Please enter your salary';
     }
     return null;
   }

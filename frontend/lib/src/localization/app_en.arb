@@ -23,6 +23,8 @@
 	"welcomeToJober": "Welcome to Jober",
 	"alreadyHaveAnAccount": "Already have an Account ?",
 	"dontHaveAnAccount": "Don't have an Account ?",
+	"age": "Age",
+	"salary": "Salary"
 	"waitingForAnswer": "Waiting for an answer",
 	"job": "Job"
 }

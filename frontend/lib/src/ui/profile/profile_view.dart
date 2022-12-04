@@ -3,6 +3,7 @@ import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
+import 'package:intl/intl.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({Key? key}) : super(key: key);
@@ -42,6 +43,11 @@ class ProfileView extends StatelessWidget {
         ? 'POSTAL_CODE NOT DEFINED'
         : viewModel.userLocation['postalcode'];
 
+    final String userFirstNameToPrint =
+        viewModel.userFirstName == '' ? 'FIRST_NAME' : viewModel.userFirstName;
+    final String userLastNameToPrint =
+        viewModel.userLastName == '' ? 'LAST_NAME' : viewModel.userLastName;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -51,7 +57,7 @@ class ProfileView extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          '${viewModel.userFirstName} ${viewModel.userLastName}',
+          userFirstNameToPrint + ' ' + userLastNameToPrint,
           style: const TextStyle(fontSize: 18),
         ),
         Text('${viewModel.userAge.toString()} years old'),
@@ -60,7 +66,7 @@ class ProfileView extends StatelessWidget {
           children: [
             Icon(Icons.email),
             const SizedBox(width: 10),
-            Text('${viewModel.userEmail}')
+            Text(viewModel.userEmail == '' ? 'EMAIL' : viewModel.userEmail),
           ],
         ),
         const SizedBox(height: 10),
@@ -68,7 +74,7 @@ class ProfileView extends StatelessWidget {
           children: [
             Icon(Icons.attach_money),
             const SizedBox(width: 10),
-            Text('${viewModel.userSalary.toString()}')
+            Text(NumberFormat.decimalPattern().format(viewModel.userSalary))
           ],
         ),
         const SizedBox(height: 10),
@@ -131,6 +137,7 @@ class ProfileView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.name,
                   cursorColor:
                       Theme.of(context).extension<AppColors>()!.primaryColor,
                   decoration:
@@ -143,6 +150,7 @@ class ProfileView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.name,
                   cursorColor:
                       Theme.of(context).extension<AppColors>()!.primaryColor,
                   decoration:
@@ -150,6 +158,30 @@ class ProfileView extends StatelessWidget {
                   initialValue: viewModel.userLastName,
                   validator: viewModel.validateLastName,
                   onSaved: (value) => viewModel.userLastName = value!,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  cursorColor:
+                      Theme.of(context).extension<AppColors>()!.primaryColor,
+                  decoration: InputDecoration(labelText: localizations.age),
+                  initialValue: viewModel.userAge.toString(),
+                  validator: viewModel.validateAge,
+                  onSaved: (value) => viewModel.userAge = int.parse(value!),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  cursorColor:
+                      Theme.of(context).extension<AppColors>()!.primaryColor,
+                  decoration: InputDecoration(labelText: localizations.salary),
+                  initialValue: viewModel.userSalary.toString(),
+                  validator: viewModel.validateSalary,
+                  onSaved: (value) => viewModel.userSalary = int.parse(value!),
                 ),
               ),
               ElevatedButton(
