@@ -34,33 +34,32 @@ serve(async (req) => {
         status: 400,
       })
     }
-    //define a user struct
+    //-- used for debugging without flutter
+    // define a user struct
     // interface User {
     //   id: string;
     // }
-    // const uuid = "5f99a26d-d0a3-4bb0-b028-039b43ce9388"
-
-    // // create a User instance with email
+    // const uuid = "3bfb2bd0-492b-4c6f-bf19-1e01481e1caf"
     // const user: User = { id: uuid };
-    //const { data, error } = await supabaseClient.from('jobseeker').select('email, userskill(skill)').eq('email', user.email)
-    //const { user_data, user_error } = await supabaseClient.from('jobseeker').select('id, userskill(skill), userlevel(level), userlocation(country, postalcode)').eq('id', user.id)
-    //if (user_error) throw user_error
-    //console.log("user data:" + user_data)
-    // put the data into a variable
-    //if (user_error) throw user_error
-    const { data, err } = await supabaseClient.from('jobseeker').select('email, id, salary,firstname, lastname, age, userskill(skill), userlevel(level), userlocation(country, postalcode)').eq('id', user.id)
-    if (err) throw err
-    //console.log(res2.data)
+    //----------------------------------------
+
+    const { data, error } = await supabaseClient.from('jobseeker').select('email, id, salary,firstname, lastname, age, userskill(skill), userlevel(level), userlocation(country, postalcode)').eq('id', user.id)
+    if (error) throw error
     // read the email from data
     // put all the skills in a single array and keep only second element of each object
-    const skills = data.map(({ userskill }) => userskill).flat().map(({ skill }) => skill)
+    let skills = data.map(({ userskill }) => userskill).flat().map(({ skill }) => skill)
+    skills = skills ? skills : []
     // put all the levels in a single array and keep only second element of each object
-    const levels = data.map(({ userlevel }) => userlevel).flat().map(({ level }) => level)
+    let level = data.map(({ userlevel }) => userlevel).flat().map(({ level }) => level)
+    level = level ? level : ""
     // put all the locations in a single array and keep only second element of each object
-    const locations = data.map(({ userlocation }) => userlocation).flat().map(({ country, postalcode }) => ({ country, postalcode }))
+    let location = data.map(({ userlocation }) => userlocation).flat().map(({ country, postalcode }) => ({ country, postalcode }))[0]
     // combine all data into one object
+    // if location has length 0, create empty dictionary
+    location = location ? location : {}
+
+
     const contents = {
-      //data: data.map(({ email, id, salary, firstname, lastname, age }) => ({ email, id, salary, firstname, lastname, age })),
       user_id: data[0].id,
       email: data[0].email,
       salary: data[0].salary,
@@ -68,8 +67,8 @@ serve(async (req) => {
       lastname: data[0].lastname,
       age: data[0].age,
       skills: skills,
-      level: levels[0],
-      location: locations[0]
+      level: level,
+      location: location
     }
 
     return new Response(JSON.stringify(contents), {
@@ -77,23 +76,6 @@ serve(async (req) => {
       status: 200,
     })
 
-
-
-
-
-
-
-
-
-    // const contents = data
-
-    // prints out the contents of the users table
-    // console.log(contents)
-
-    //return new Response(JSON.stringify({ contents }), {
-    //  headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    //  status: 200,
-    //})
   } catch (error) {
     console.error(error)
 
