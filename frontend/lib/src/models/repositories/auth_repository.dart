@@ -11,6 +11,7 @@ class AuthRepository {
   User? _user;
   UserProfile? _userProfile;
   List<String>? _possibleSkills;
+  List<String>? _possibleLevels;
 
   AuthRepository._internal() {
     _user = supabaseClient.auth.currentUser;
@@ -81,12 +82,21 @@ class AuthRepository {
       _possibleSkills = List<String>.from(response.data);
     }
 
-    print(_possibleSkills);
     return _possibleSkills!;
+  }
+
+  Future<List<String>> getPossibleLevels() async {
+    if (_possibleLevels == null) {
+      final response = await supabaseClient.functions.invoke('getLevels');
+      _possibleLevels = List<String>.from(response.data);
+    }
+
+    return _possibleLevels!;
   }
 
   User? get user => _user;
   UserProfile? get userProfile => _userProfile;
-  List<String>? get userSkills => _possibleSkills;
+  List<String>? get userPossibleSkills => _possibleSkills;
+  List<String>? get userPossibleLevels => _possibleLevels;
   bool isConnected() => _user != null;
 }

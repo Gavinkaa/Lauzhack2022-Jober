@@ -1,5 +1,3 @@
-
-
 class UserProfile {
   String firstName;
   String lastName;
@@ -27,9 +25,14 @@ class UserProfile {
     int age = json.keys.contains('age') ? json['age'] : 0;
     String email = json.keys.contains('email') ? json['email'] : '';
     int salary = json.keys.contains('salary') ? json['salary'] : 0;
-    List<String> skills = json.keys.contains('skills')
-        ? List<String>.from(json['skills'])
-        : <String>[];
+    List<String> skills = [];
+    try {
+      skills = json.keys.contains('skills')
+          ? List<String>.from(json['skills'])
+          : <String>[];
+    } catch (e) {
+      print('ERROR on skills: $e');
+    }
     Map<String, dynamic> location = json.keys.contains('location')
         ? {
             'country': json['location']?.keys.contains('country') ?? false
