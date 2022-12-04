@@ -18,7 +18,7 @@ you need to install the following dependencies:
 
 
 ## Screens
-<img src="https://user-images.githubusercontent.com/20269233/205486197-1a955c3d-9c51-4286-9dfd-c795c59547f4.jpeg" alt="screen" width="50%" />
+<img src="https://user-images.githubusercontent.com/20269233/205486197-1a955c3d-9c51-4286-9dfd-c795c59547f4.jpeg" alt="screen" width="25%" />
 ![WhatsApp Image 2022-12-04 at 11 38 53](https://user-images.githubusercontent.com/20269233/205486200-ad942da3-f238-4c59-be13-b138b40f23c3.jpeg)
 ![WhatsApp Image 2022-12-04 at 11 38 52](https://user-images.githubusercontent.com/20269233/205486202-bb2511e3-692d-4a50-bb8d-4f2d603ab6ee.jpeg)
 ![WhatsApp Image 2022-12-04 at 11 38 46](https://user-images.githubusercontent.com/20269233/205486205-073f351f-a54f-4ba1-829e-980835222c4f.jpeg)
