@@ -7,8 +7,9 @@ class ProfileViewModel extends ChangeNotifier {
   final _authRepository = AuthRepository.getInstance();
 
   Future<void> signOut(BuildContext context) async {
+    Navigator.pushNamedAndRemoveUntil(
+        context, WelcomeView.routeName, (route) => false);
     await _authRepository.signOut();
-    Navigator.pushNamedAndRemoveUntil(context, WelcomeView.routeName, (route) => false);
     notifyListeners();
   }
 
@@ -23,12 +24,16 @@ class ProfileViewModel extends ChangeNotifier {
   Map<String, dynamic> get userLocation =>
       _authRepository.userProfile!.location;
   String get userLevel => _authRepository.userProfile!.level;
+  List<String> get userSkillsList => _authRepository.userSkills!;
 
   bool get editMode => _editMode;
+
+  List<String> _skillsLocal = [];
 
   Future<void> ensureUserProfileDefined() async {
     if (_authRepository.userProfile == null) {
       await _authRepository.fetchUser();
+      await _authRepository.getSkills();
     }
   }
 
@@ -49,6 +54,16 @@ class ProfileViewModel extends ChangeNotifier {
 
   set userSalary(int salary) {
     _authRepository.userProfile!.salary = salary;
+    notifyListeners();
+  }
+
+  // Because of the multi form
+  set userSkills(List<String> skills) {
+    _skillsLocal = skills;
+  }
+
+  void _userSetSkills(List<String> skills) {
+    _authRepository.userProfile!.skills = skills;
     notifyListeners();
   }
 
@@ -85,9 +100,18 @@ class ProfileViewModel extends ChangeNotifier {
     return null;
   }
 
+  String? validateSkills(dynamic? value) {
+    if (value == null || value?.isEmpty) {
+      return 'Please enter your skills';
+    }
+    return null;
+  }
+
   void validateForm(GlobalKey<FormState> formKey) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+
+      _userSetSkills(_skillsLocal);
 
       _authRepository.pushChanges();
 

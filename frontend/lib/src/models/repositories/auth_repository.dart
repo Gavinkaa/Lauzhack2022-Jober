@@ -12,6 +12,7 @@ class AuthRepository {
   // TODO: check if useful
   User? _user;
   UserProfile? _userProfile;
+  List<String>? _userSkills;
 
   AuthRepository._internal() {
     _user = supabaseClient.auth.currentUser;
@@ -76,7 +77,18 @@ class AuthRepository {
     });
   }
 
+  Future<List<String>> getSkills() async {
+    if (_userSkills == null) {
+      final response = await supabaseClient.functions.invoke('getSkills');
+      _userSkills = List<String>.from(response.data);
+    }
+
+    print(_userSkills);
+    return _userSkills!;
+  }
+
   User? get user => _user;
   UserProfile? get userProfile => _userProfile;
+  List<String>? get userSkills => _userSkills;
   bool isConnected() => _user != null;
 }

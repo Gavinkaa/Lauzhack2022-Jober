@@ -6,10 +6,13 @@
 	"firstName": "First Name",
 	"lastName": "Last Name",
 	"save": "Save",
+	"select": "Select",
 	"cancel": "Cancel",
 	"signUp": "Sign Up",
 	"signIn": "Sign In",
 	"signOut": "Sign Out",
+	"skills": "Skills",
+	"tapToSelect": "Tap to select one or more",
 	"email": "Email",
 	"password": "Password",
 	"yourEmail": "Your Email",
@@ -24,7 +27,7 @@
 	"alreadyHaveAnAccount": "Already have an Account ?",
 	"dontHaveAnAccount": "Don't have an Account ?",
 	"age": "Age",
-	"salary": "Salary"
+	"salary": "Salary",
 	"waitingForAnswer": "Waiting for an answer",
 	"job": "Job"
 }
