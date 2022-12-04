@@ -23,7 +23,7 @@ class ProfileViewModel extends ChangeNotifier {
   Map<String, dynamic> get userLocation =>
       _authRepository.userProfile!.location;
   String get userLevel => _authRepository.userProfile!.level;
-  List<String> get userSkillsList => _authRepository.userSkills!;
+  List<String> get possibleSkillsList => _authRepository.userSkills!;
 
   bool get editMode => _editMode;
 
@@ -32,7 +32,7 @@ class ProfileViewModel extends ChangeNotifier {
   Future<void> ensureUserProfileDefined() async {
     if (_authRepository.userProfile == null) {
       await _authRepository.fetchUser();
-      await _authRepository.getSkills();
+      await _authRepository.getPossibleSkills();
     }
   }
 

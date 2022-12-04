@@ -190,10 +190,10 @@ class ProfileView extends StatelessWidget {
                   child: MultiSelectFormField(
                     title: Text(localizations.skills),
                     dataSource: List.generate(
-                        viewModel.userSkillsList.length,
+                        viewModel.possibleSkillsList.length,
                         (index) => {
-                              'display': viewModel.userSkillsList[index],
-                              'value': viewModel.userSkillsList[index],
+                              'display': viewModel.possibleSkillsList[index],
+                              'value': viewModel.possibleSkillsList[index],
                             }),
                     textField: 'display',
                     valueField: 'value',
