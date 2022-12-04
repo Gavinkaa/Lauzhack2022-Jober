@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jober/src/models/data/user_profile.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
+import 'package:jober/src/ui/welcome/welcome_view.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   UserProfile? _userProfile;
@@ -29,9 +30,11 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     await _authRepository.signOut();
     _userProfile = null;
+    Navigator.pushNamedAndRemoveUntil(
+        context, WelcomeView.routeName, (route) => false);
     notifyListeners();
   }
 

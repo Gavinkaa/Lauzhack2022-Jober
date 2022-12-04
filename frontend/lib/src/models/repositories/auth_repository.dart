@@ -88,4 +88,8 @@ class AuthRepository {
   }
 
   User? get user => _user;
+
+  bool isConnected() {
+    return _user != null;
+  }
 }
