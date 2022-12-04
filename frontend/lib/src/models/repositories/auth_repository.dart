@@ -57,14 +57,7 @@ class AuthRepository {
 
   Future<void> fetchUser() async {
     final response = await supabaseClient.functions.invoke('getUserData');
-
-    print(response.data);
-
     final userProfile = UserProfile.fromJson(response.data);
-
-    print(userProfile.skills);
-    print(userProfile.level);
-    print(userProfile.location);
 
     _userProfile = userProfile;
   }
