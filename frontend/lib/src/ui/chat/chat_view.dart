@@ -19,14 +19,27 @@ class _ChatViewState extends State<ChatView> {
         future: _viewModel.fetchJobs(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            print("YOOOO");
-            print(_viewModel.getJobs().length);
             return ListView.builder(
               itemCount: _viewModel.getJobs().length,
               itemBuilder: (context, index) {
-                print("${_viewModel.getJobs()[index]}\n");
-                return ListTile(
-                  title: Text(_viewModel.getJobs()[index].name),
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: _viewModel.getJobs()[index].imageUrl.contains("assets")
+                            ? AssetImage(_viewModel.getJobs()[index].imageUrl) as ImageProvider
+                            : NetworkImage(_viewModel.getJobs()[index].imageUrl),
+
+                      ),
+                      title: Text(_viewModel.getJobs()[index].name),
+                      trailing: const Icon(Icons.alarm, color: Colors.orange,),
+                      subtitle: Text(_viewModel.getJobs()[index].description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    ),
+                    const Divider(
+                      height: 0,
+                      thickness: 1,
+                    )
+                  ],
                 );
               },
             );

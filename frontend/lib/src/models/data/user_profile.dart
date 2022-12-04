@@ -22,25 +22,25 @@ class UserProfile {
       required this.level});
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
-    final firstName = json.keys.contains('firstname') ? json['firstname'] : '';
-    final lastName = json.keys.contains('lastname') ? json['lastname'] : '';
-    final age = json.keys.contains('age') ? json['age'] : 0;
-    final email = json.keys.contains('email') ? json['email'] : '';
-    final salary = json.keys.contains('salary') ? json['salary'] : 0;
-    final skills = json.keys.contains('skills')
+    String firstName = json.keys.contains('firstname') ? json['firstname'] : '';
+    String lastName = json.keys.contains('lastname') ? json['lastname'] : '';
+    int age = json.keys.contains('age') ? json['age'] : 0;
+    String email = json.keys.contains('email') ? json['email'] : '';
+    int salary = json.keys.contains('salary') ? json['salary'] : 0;
+    List<String> skills = json.keys.contains('skills')
         ? List<String>.from(json['skills'])
         : <String>[];
-    final location = json.keys.contains('location')
+    Map<String, dynamic> location = json.keys.contains('location')
         ? {
             'country': json['location']?.keys.contains('country') ?? false
                 ? json['location']['country']
                 : '',
             'postalcode': json['location']?.keys.contains('postalcode') ?? false
-                ? int.parse(json['location']['postalcode'])
+                ? int.parse(json['location']['postalcode'].toString())
                 : 0,
           }
         : {'country': '', 'postalcode': 0};
-    final level = json.keys.contains('level') ? json['level'] : '';
+    String level = json.keys.contains('level') ? json['level'] : '';
 
     return UserProfile(
         firstName: firstName,

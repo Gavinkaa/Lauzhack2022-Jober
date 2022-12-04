@@ -4,6 +4,7 @@ import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class ProfileView extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          userFirstNameToPrint + ' ' + userLastNameToPrint,
+          '$userFirstNameToPrint $userLastNameToPrint',
           style: const TextStyle(fontSize: 18),
         ),
         Text('${viewModel.userAge.toString()} years old'),
@@ -184,6 +185,27 @@ class ProfileView extends StatelessWidget {
                   onSaved: (value) => viewModel.userSalary = int.parse(value!),
                 ),
               ),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MultiSelectFormField(
+                    title: Text(localizations.skills),
+                    dataSource: List.generate(
+                        viewModel.possibleSkillsList.length,
+                        (index) => {
+                              'display': viewModel.possibleSkillsList[index],
+                              'value': viewModel.possibleSkillsList[index],
+                            }),
+                    textField: 'display',
+                    valueField: 'value',
+                    okButtonLabel: localizations.select,
+                    cancelButtonLabel: localizations.cancel,
+                    hintWidget: Text(localizations.tapToSelect),
+                    onSaved: (value) {
+                      final skills = List<String>.from(value!);
+                      viewModel.userSkills = skills;
+                    },
+                    validator: viewModel.validateSkills,
+                  )),
               ElevatedButton(
                 child: Text(localizations.save),
                 onPressed: () => viewModel.validateForm(_formKey),

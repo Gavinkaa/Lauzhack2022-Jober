@@ -2,8 +2,8 @@
 // https://deno.land/manual/getting_started/setup_your_environment
 // This enables autocomplete, go to definition, etc.
 
-import { serve } from 'https://deno.land/std@0.131.0/http/server.ts'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import {serve} from 'https://deno.land/std@0.131.0/http/server.ts'
+import {createClient} from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,17 +34,18 @@ serve(async (req) => {
       if (jobSkills.error) throw jobSkills.error
 
       // Let dataWithSkills be the map of data with a new key 'skills' that is an array of Strings
-      const dataWithSkills = job.data.map((job) => {
-          // Filter the jobData array to only include the skills for the current job
-          const skills = jobSkills.data.filter((jobSkill) => jobSkill.jobid === job.jobid).map((jobSkill) => jobSkill.skill)
-          // Return the job with the skills array
-          return {
-              ...job,
-              skills
-          }
+      let data = job.data.map((job) => {
+        if (job.url == "null") {
+          job.url = null
+        }
+        // Filter the jobData array to only include the skills for the current job
+        const skills = jobSkills.data.filter((jobSkill) => jobSkill.jobid === job.jobid).map((jobSkill) => jobSkill.skill)
+        // Return the job with the skills array
+        return {
+          ...job,
+          skills
+        }
       })
-
-      let data = dataWithSkills
 
       return new Response(JSON.stringify(data), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
