@@ -3,13 +3,10 @@ import 'package:jober/src/models/data/user_profile.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
 
 class ProfileViewModel extends ChangeNotifier {
-  UserProfile? _userProfile;
-
   final _authRepository = AuthRepository.getInstance();
 
   Future<void> signOut() async {
     await _authRepository.signOut();
-    _userProfile = null;
     notifyListeners();
   }
 
@@ -17,9 +14,9 @@ class ProfileViewModel extends ChangeNotifier {
 
   bool _editMode = false;
 
-  String get userFirstName => _userProfile!.firstName;
+  String get userFirstName => _authRepository.userProfile!.firstName;
 
-  String get userLastName => _userProfile!.lastName;
+  String get userLastName => _authRepository.userProfile!.lastName;
 
   bool get editMode => _editMode;
 
@@ -33,13 +30,13 @@ class ProfileViewModel extends ChangeNotifier {
   // }
 
   set userFirstName(String firstName) {
-    _userProfile!.firstName = firstName;
+    _authRepository.userProfile!.firstName = firstName;
     //TODO: update database
     notifyListeners();
   }
 
   set userLastName(String lastName) {
-    _userProfile!.lastName = lastName;
+    _authRepository.userProfile!.lastName = lastName;
     //TODO: update database
     notifyListeners();
   }
