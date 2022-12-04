@@ -15,12 +15,12 @@ DROP TABLE Matching cascade;
 DROP TABLE SwapRight cascade;
 
 CREATE TABLE JobSeeker (
+    id uuid REFERENCES auth.users NOT NULL primary key,
     EMAIL varchar NOT NULL,
     salary int,
     firstname varchar,
     lastname varchar,
-    age int,
-    PRIMARY KEY (EMAIL)
+    age int
 );
 
 --create a table for skills which are strings
@@ -31,11 +31,11 @@ CREATE TABLE Skill (
 
 --create a table for the many-to-one relationship between users and skills
 CREATE TABLE UserSkill (
+    userid uuid,
     id int NOT NULL,
-    EMAIL varchar NOT NULL,
     skill varchar NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
+    FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
@@ -54,11 +54,11 @@ CREATE TABLE Location (
 
 --create a table for the many-to-one relationship between users and locations
 CREATE TABLE UserLocation (
-    EMAIL varchar NOT NULL,
+    userid uuid,
     country varchar NOT NULL,
     postalCode int NOT NULL,
-    PRIMARY KEY (EMAIL, country, postalCode),
-    FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
+    PRIMARY KEY (userid, country, postalCode),
+    FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
@@ -70,10 +70,10 @@ CREATE TABLE Level (
 
 --create a table for the many-to-one relationship between users and experience
 CREATE TABLE UserLevel (
-    EMAIL varchar NOT NULL,
+    userid uuid,
     level varchar NOT NULL,
-    PRIMARY KEY (EMAIL, level),
-    FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
+    PRIMARY KEY (userid, level),
+    FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (level) REFERENCES Level(level)
 );
 
@@ -126,37 +126,20 @@ CREATE TABLE JobLevel (
 
 -- create a Matching table. It has a user email and Jobid are the primary key
 CREATE TABLE Matching (
-    EMAIL varchar NOT NULL,
+    userid uuid,
     JobId int NOT NULL,
     company varchar NOT NULL,
-    PRIMARY KEY (EMAIL, JobId),
-    FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
+    PRIMARY KEY (userid, JobId),
+    FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
 
 -- create a SwapRight table. It has a user email and Jobid are the primary key
 CREATE TABLE SwapRight (
-    EMAIL varchar NOT NULL,
+    userid uuid,
     JobId int NOT NULL,
     company varchar NOT NULL,
-    PRIMARY KEY (EMAIL, JobId),
-    FOREIGN KEY (EMAIL) REFERENCES JobSeeker(EMAIL),
+    PRIMARY KEY (userid, JobId),
+    FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (JobId) REFERENCES Job(JobId)
 );
-
--- get all users from JobSeeker table
-CREATE OR REPLACE FUNCTION get_all_users()
-RETURNS TABLE (EMAIL varchar, salary int) AS $$
-BEGIN
-    RETURN QUERY SELECT * FROM JobSeeker;
-END;
-$$ LANGUAGE plpgsql;
-
-
--- get all users with a skill of 'Java' from JobSeeker table
-CREATE OR REPLACE FUNCTION get_all_users_with_skill(skill varchar)
-RETURNS TABLE (EMAIL varchar, salary int) AS $$
-BEGIN
-    RETURN QUERY SELECT * FROM JobSeeker WHERE EMAIL IN (SELECT EMAIL FROM UserSkill WHERE skill = skill);
-END;
-$$ LANGUAGE plpgsql;

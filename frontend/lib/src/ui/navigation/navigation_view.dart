@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 class NavigationView extends StatelessWidget {
   const NavigationView({Key? key}) : super(key: key);
 
-  static const routeName = '/';
+  static const routeName = '/home';
 
   @override
   Widget build(BuildContext context) {
