@@ -18,7 +18,7 @@ class MatchView extends StatelessWidget {
             child: Column(
               children: [
                 buildCards(context),
-                const SizedBox(height: 16,),
+                SizedBox(height: 16),
                 buildButtons(context),
               ],
             )
@@ -67,6 +67,7 @@ class MatchView extends StatelessWidget {
               shape: MaterialStateProperty.all(const CircleBorder()),
               side: getBorder(Colors.red, isDislike),
               minimumSize:MaterialStateProperty.all(const Size.square(70)),
+              maximumSize: MaterialStateProperty.all(const Size.square(70)),
               elevation: getElevation(isDislike),
             ),
             onPressed: () {
@@ -82,6 +83,7 @@ class MatchView extends StatelessWidget {
               shape: MaterialStateProperty.all(const CircleBorder()),
               side: getBorder(Colors.blue, isSuperLike),
               minimumSize:MaterialStateProperty.all(const Size.square(70)),
+              maximumSize: MaterialStateProperty.all(const Size.square(70)),
               elevation: getElevation(isSuperLike),
             ),
             onPressed: () {
@@ -97,6 +99,7 @@ class MatchView extends StatelessWidget {
               shape: MaterialStateProperty.all(const CircleBorder()),
               side: getBorder(Colors.green, isLike),
               minimumSize:MaterialStateProperty.all(const Size.square(70)),
+              maximumSize: MaterialStateProperty.all(const Size.square(70)),
               elevation: getElevation(isLike),
             ),
             onPressed: () {

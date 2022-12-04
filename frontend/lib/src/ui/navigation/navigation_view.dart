@@ -28,9 +28,7 @@ class NavigationView extends StatelessWidget {
     return CurvedNavigationBar(
       index: viewModel.currentIndex,
       color: Theme.of(context).extension<AppColors>()!.bottomAppBarColor!,
-      backgroundColor: Theme
-          .of(context)
-          .scaffoldBackgroundColor,
+      backgroundColor: Colors.transparent,
       items: [
         CurvedNavigationBarItem(
           child: Icon(Icons.person, color: Theme.of(context).extension<AppColors>()!.bottomAppBarIconColor),
