@@ -23,16 +23,19 @@ class ProfileViewModel extends ChangeNotifier {
   Map<String, dynamic> get userLocation =>
       _authRepository.userProfile!.location;
   String get userLevel => _authRepository.userProfile!.level;
-  List<String> get possibleSkillsList => _authRepository.userSkills!;
+  List<String> get possibleSkillsList => _authRepository.userPossibleSkills!;
+  List<String> get possibleUserLevelList => _authRepository.userPossibleLevels!;
 
   bool get editMode => _editMode;
 
   List<String> _skillsLocal = [];
+  String _levelLocal = '';
 
   Future<void> ensureUserProfileDefined() async {
     if (_authRepository.userProfile == null) {
       await _authRepository.fetchUser();
       await _authRepository.getPossibleSkills();
+      await _authRepository.getPossibleLevels();
     }
   }
 
@@ -63,6 +66,16 @@ class ProfileViewModel extends ChangeNotifier {
 
   void _userSetSkills(List<String> skills) {
     _authRepository.userProfile!.skills = skills;
+    notifyListeners();
+  }
+
+  // Because of the multi form
+  set userLevel(String level) {
+    _levelLocal = level;
+  }
+
+  void _userSetLevel(String level) {
+    _authRepository.userProfile!.level = level;
     notifyListeners();
   }
 
@@ -106,11 +119,19 @@ class ProfileViewModel extends ChangeNotifier {
     return null;
   }
 
+  String? validateLevel(dynamic? value) {
+    if (value == null || value?.isEmpty || value?.length != 1) {
+      return 'Please enter your (ONE) level';
+    }
+    return null;
+  }
+
   void validateForm(GlobalKey<FormState> formKey) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 
       _userSetSkills(_skillsLocal);
+      _userSetLevel(_levelLocal);
 
       _authRepository.pushChanges();
 

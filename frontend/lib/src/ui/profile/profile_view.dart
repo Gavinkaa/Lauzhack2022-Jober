@@ -186,26 +186,52 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MultiSelectFormField(
-                    title: Text(localizations.skills),
-                    dataSource: List.generate(
-                        viewModel.possibleSkillsList.length,
-                        (index) => {
-                              'display': viewModel.possibleSkillsList[index],
-                              'value': viewModel.possibleSkillsList[index],
-                            }),
-                    textField: 'display',
-                    valueField: 'value',
-                    okButtonLabel: localizations.select,
-                    cancelButtonLabel: localizations.cancel,
-                    hintWidget: Text(localizations.tapToSelect),
-                    onSaved: (value) {
-                      final skills = List<String>.from(value!);
-                      viewModel.userSkills = skills;
-                    },
-                    validator: viewModel.validateSkills,
-                  )),
+                padding: const EdgeInsets.all(8.0),
+                child: MultiSelectFormField(
+                  title: Text(localizations.skills),
+                  dataSource: List.generate(
+                      viewModel.possibleSkillsList.length,
+                      (index) => {
+                            'display': viewModel.possibleSkillsList[index],
+                            'value': viewModel.possibleSkillsList[index],
+                          }),
+                  textField: 'display',
+                  valueField: 'value',
+                  initialValue: viewModel.userSkills,
+                  okButtonLabel: localizations.select,
+                  cancelButtonLabel: localizations.cancel,
+                  hintWidget: Text(localizations.tapToSelect),
+                  onSaved: (value) {
+                    final skills = List<String>.from(value!);
+                    viewModel.userSkills = skills;
+                  },
+                  validator: viewModel.validateSkills,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MultiSelectFormField(
+                  title: Text(localizations.level),
+                  dataSource: List.generate(
+                      viewModel.possibleUserLevelList.length,
+                      (index) => {
+                            'display': viewModel.possibleUserLevelList[index],
+                            'value': viewModel.possibleUserLevelList[index],
+                          }),
+                  textField: 'display',
+                  valueField: 'value',
+                  okButtonLabel: localizations.select,
+                  initialValue:
+                      viewModel.userLevel == '' ? [] : [viewModel.userLevel],
+                  cancelButtonLabel: localizations.cancel,
+                  hintWidget: Text(localizations.tapToSelectOne),
+                  onSaved: (value) {
+                    final levels = List<String>.from(value!);
+                    viewModel.userLevel = levels[0];
+                  },
+                  validator: viewModel.validateLevel,
+                ),
+              ),
               ElevatedButton(
                 child: Text(localizations.save),
                 onPressed: () => viewModel.validateForm(_formKey),
