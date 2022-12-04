@@ -14,18 +14,21 @@ class ProfileView extends StatelessWidget {
     final viewModel = context.watch<ProfileViewModel>();
 
     return Scaffold(
-      body: Center(
-        child: FutureBuilder(
-          builder: ((context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return viewModel.editMode
-                  ? _buildEditProfileForm(context, viewModel)
-                  : _buildProfileView(context, viewModel);
-            } else {
-              return const CircularProgressIndicator.adaptive();
-            }
-          }),
-          future: viewModel.ensureUserProfileDefined(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Center(
+          child: FutureBuilder(
+            builder: ((context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return viewModel.editMode
+                    ? _buildEditProfileForm(context, viewModel)
+                    : _buildProfileView(context, viewModel);
+              } else {
+                return const CircularProgressIndicator.adaptive();
+              }
+            }),
+            future: viewModel.ensureUserProfileDefined(),
+          ),
         ),
       ),
     );
