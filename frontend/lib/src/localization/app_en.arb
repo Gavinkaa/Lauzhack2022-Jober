@@ -22,5 +22,7 @@
 	"verifyYourEmailText": "You need to verify your email before you can login",
 	"welcomeToJober": "Welcome to Jober",
 	"alreadyHaveAnAccount": "Already have an Account ?",
-	"dontHaveAnAccount": "Don't have an Account ?"
+	"dontHaveAnAccount": "Don't have an Account ?",
+	"age": "Age",
+	"salary": "Salary"
 }
