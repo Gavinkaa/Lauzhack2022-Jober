@@ -53,14 +53,8 @@ class MyApp extends StatelessWidget {
                   return NavigationView(key: key,);
                 case MatchView.routeName:
                   return MatchView(key: key,);
-                case SignInView.routeName:
-                  return SignInView(key: key,);
-                case WelcomeView.routeName:
-                  return WelcomeView(key: key,);
-                case SignUpView.routeName:
-                  return SignUpView(key: key,);
                 default:
-                  return WelcomeView(key: key,);
+                  return NavigationView(key: key,);
               }
             } else {
               switch (routeSettings.name) {
