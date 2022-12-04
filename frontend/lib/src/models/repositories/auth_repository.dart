@@ -56,39 +56,24 @@ class AuthRepository {
   }
 
   Future<void> fetchUser() async {
-    print('USER IS: $_user');
-
-    _userProfile = UserProfile(
-        firstName: 'John',
-        lastName: 'Doe',
-        age: 20,
-        email: _user!.email!,
-        salary: 0,
-        skills: ['Java', 'Flutter'],
-        location: {'country': 'CH', 'postalcode': '1234'},
-        level: 'Junior');
-  }
-
-  Future<void> pushChanges() async {}
-
-  Future<void> setUser(UserProfile userProfile) async {
-    final response = await supabaseClient.functions.invoke('setUser', body: {
-      'salary': userProfile.salary,
-      'firstname': userProfile.firstName,
-      'lastname': userProfile.lastName,
-      'age': userProfile.age,
-      'skills': jsonEncode(['Java']),
-    });
-  }
-
-  Future<void> dougyStyle() async {
     final response = await supabaseClient.functions.invoke('getUserData');
-
-    print(response.data);
 
     final userProfile = UserProfile.fromJson(response.data);
 
-    print(userProfile);
+    _userProfile = userProfile;
+  }
+
+  Future<void> pushChanges() async {
+    final response = await supabaseClient.functions.invoke('setUser', body: {
+      'firstname': _userProfile!.firstName,
+      'lastname': _userProfile!.lastName,
+      'age': _userProfile!.age,
+      'email': _userProfile!.email,
+      'salary': _userProfile!.salary,
+      'skills': _userProfile!.skills,
+      'location': _userProfile!.location,
+      'level': _userProfile!.level,
+    });
   }
 
   User? get user => _user;
