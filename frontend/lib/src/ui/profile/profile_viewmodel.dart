@@ -20,8 +20,10 @@ class ProfileViewModel extends ChangeNotifier {
   String get userEmail => _authRepository.userProfile!.email;
   int get userSalary => _authRepository.userProfile!.salary;
   List<String> get userSkills => _authRepository.userProfile!.skills;
-  Map<String, dynamic> get userLocation =>
-      _authRepository.userProfile!.location;
+  String get userLocationCountry =>
+      _authRepository.userProfile!.location['country'];
+  int get userLocationPostalCode =>
+      _authRepository.userProfile!.location['postalcode'];
   String get userLevel => _authRepository.userProfile!.level;
   List<String> get possibleSkillsList => _authRepository.userPossibleSkills!;
   List<String> get possibleUserLevelList => _authRepository.userPossibleLevels!;
@@ -56,6 +58,16 @@ class ProfileViewModel extends ChangeNotifier {
 
   set userSalary(int salary) {
     _authRepository.userProfile!.salary = salary;
+    notifyListeners();
+  }
+
+  set userLocationCountry(String country) {
+    _authRepository.userProfile!.location['country'] = country;
+    notifyListeners();
+  }
+
+  set userLocationPostalCode(int postalCode) {
+    _authRepository.userProfile!.location['postalcode'] = postalCode;
     notifyListeners();
   }
 
@@ -108,6 +120,23 @@ class ProfileViewModel extends ChangeNotifier {
   String? validateSalary(String? value) {
     if (value == null || value.isEmpty || int.tryParse(value) == null) {
       return 'Please enter your salary';
+    }
+    return null;
+  }
+
+  String? validateLocationCountry(String? value) {
+    if (value == null || value.isEmpty || value.length != 2) {
+      return 'Please enter your country';
+    }
+    return null;
+  }
+
+  String? validateLocationPostalCode(String? value) {
+    if (value == null ||
+        value.isEmpty ||
+        value.length != 4 ||
+        int.tryParse(value) == null) {
+      return 'Please enter your postal code';
     }
     return null;
   }

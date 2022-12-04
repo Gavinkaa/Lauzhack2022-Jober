@@ -37,12 +37,12 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _buildProfileView(BuildContext context, ProfileViewModel viewModel) {
-    final String countryToPrint = viewModel.userLocation['country'] == ''
-        ? 'COUNTRY NOT DEFINED'
-        : viewModel.userLocation['country'];
-    final String postalToPrint = viewModel.userLocation['postalcode'] == 0
-        ? 'POSTAL_CODE NOT DEFINED'
-        : viewModel.userLocation['postalcode'];
+    final String countryToPrint = viewModel.userLocationCountry == ''
+        ? AppLocalizations.of(context)!.notDefined
+        : viewModel.userLocationCountry;
+    final String postalToPrint = viewModel.userLocationPostalCode == 0
+        ? AppLocalizations.of(context)!.notDefined
+        : viewModel.userLocationPostalCode.toString();
 
     final String userFirstNameToPrint =
         viewModel.userFirstName == '' ? 'FIRST_NAME' : viewModel.userFirstName;
@@ -123,8 +123,7 @@ class ProfileView extends StatelessWidget {
       BuildContext context, ProfileViewModel viewModel) {
     final localizations = AppLocalizations.of(context)!;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return ListView(
       children: [
         const CircleAvatar(
           radius: 50,
@@ -183,6 +182,33 @@ class ProfileView extends StatelessWidget {
                   initialValue: viewModel.userSalary.toString(),
                   validator: viewModel.validateSalary,
                   onSaved: (value) => viewModel.userSalary = int.parse(value!),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  cursorColor:
+                      Theme.of(context).extension<AppColors>()!.primaryColor,
+                  decoration:
+                      InputDecoration(labelText: localizations.countryCode),
+                  initialValue: viewModel.userLocationCountry,
+                  validator: viewModel.validateLocationCountry,
+                  onSaved: (value) => viewModel.userLocationCountry = value!,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  cursorColor:
+                      Theme.of(context).extension<AppColors>()!.primaryColor,
+                  decoration:
+                      InputDecoration(labelText: localizations.postalCode),
+                  initialValue: viewModel.userLocationPostalCode.toString(),
+                  validator: viewModel.validateLocationPostalCode,
+                  onSaved: (value) =>
+                      viewModel.userLocationPostalCode = int.parse(value!),
                 ),
               ),
               Padding(
