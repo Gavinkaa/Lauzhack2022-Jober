@@ -18,7 +18,7 @@ class MatchView extends StatelessWidget {
             child: Column(
               children: [
                 buildCards(context),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 buildButtons(context),
               ],
             )

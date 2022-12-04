@@ -16,62 +16,54 @@ DROP TABLE SwapRight cascade;
 
 CREATE TABLE JobSeeker (
     id uuid REFERENCES auth.users NOT NULL primary key,
-    EMAIL varchar NOT NULL,
+    EMAIL VARCHAR(50) NOT NULL,
     salary int,
-    firstname varchar,
-    lastname varchar,
-    age int
+    firstname VARCHAR(20),
+    lastname VARCHAR(20),
+    age int(3)
 );
 
 --create a table for skills which are strings
 CREATE TABLE Skill (
-    skill varchar NOT NULL,
-    PRIMARY KEY (skill)
+    skill varchar PRIMARY KEY,
 );
 
 --create a table for the many-to-one relationship between users and skills
 CREATE TABLE UserSkill (
     userid uuid,
-    id int NOT NULL,
-    skill varchar NOT NULL,
-    PRIMARY KEY (id),
+    skill varchar,
+    PRIMARY KEY (uuid, skill),
     FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
 --create a table for locations which string with country and postal code
 CREATE TABLE Location (
-    country varchar NOT NULL,
-    postalCode int NOT NULL,
+    country varchar(2),
+    postalCode int CHECK (postalCode > 999 AND postalCode < 10000),
     PRIMARY KEY (country, postalCode)
 );
 
---create a table for location which are strings
--- CREATE TABLE Location (
---     location varchar NOT NULL,
---     PRIMARY KEY (location)
--- );
 
 --create a table for the many-to-one relationship between users and locations
 CREATE TABLE UserLocation (
     userid uuid,
     country varchar NOT NULL,
     postalCode int NOT NULL,
-    PRIMARY KEY (userid, country, postalCode),
+    PRIMARY KEY (userid),
     FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 --create a table for the level of experience which are strings
 CREATE TABLE Level (
-    level varchar NOT NULL,
-    PRIMARY KEY (level)
+    level varchar PRIMARY KEY,
 );
 
 --create a table for the many-to-one relationship between users and experience
 CREATE TABLE UserLevel (
     userid uuid,
-    level varchar NOT NULL,
+    level varchar,
     PRIMARY KEY (userid, level),
     FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (level) REFERENCES Level(level)
@@ -79,56 +71,40 @@ CREATE TABLE UserLevel (
 
 -- create a table for company. name is the primary key, it has a location
 CREATE TABLE Company (
+    id INTEGER PRIMARY KEY,
     name varchar NOT NULL,
-    country varchar NOT NULL,
+    country varchar(2) NOT NULL,
     postalCode int NOT NULL,
-    PRIMARY KEY (name),
     FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a Job table. JobId and company name forms the primary key. It has a location
 CREATE TABLE Job (
-    JobId INTEGER NOT NULL PRIMARY KEY,
-    company varchar NOT NULL,
+    JobId INTEGER PRIMARY KEY,
+    companyId INTEGER NOT NULL,
     name varchar NOT NULL,
-    country varchar NOT NULL,
+    country varchar(2) NOT NULL,
     postalCode int NOT NULL,
+    level varchar NOT NULL,
+    FOREIGN KEY (level) REFERENCES Level(level),
+    FOREIGN KEY (companyId) REFERENCES Company(id),
     FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
 );
 
 -- create a table for the many-to-many relationship between jobs and skills
 CREATE TABLE JobSkill (
-    JobId int NOT NULL,
-    skill varchar NOT NULL,
+    JobId int,
+    skill varchar,
     PRIMARY KEY (JobId, skill),
     FOREIGN KEY (JobId) REFERENCES Job(JobId),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
 
--- create a table for the many-to-one relationship between jobs and location
-CREATE TABLE JobLocation (
-    JobId int NOT NULL,
-    country varchar NOT NULL,
-    postalCode int NOT NULL,
-    PRIMARY KEY (JobId, country, postalCode),
-    FOREIGN KEY (JobId) REFERENCES Job(JobId),
-    FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)
-);
-
--- create a table for the many-to-one relationship between jobs and experience
-CREATE TABLE JobLevel (
-    JobId int NOT NULL,
-    level varchar NOT NULL,
-    PRIMARY KEY (JobId, level),
-    FOREIGN KEY (JobId) REFERENCES Job(JobId),
-    FOREIGN KEY (level) REFERENCES Level(level)
-);
 
 -- create a Matching table. It has a user email and Jobid are the primary key
 CREATE TABLE Matching (
     userid uuid,
-    JobId int NOT NULL,
-    company varchar NOT NULL,
+    JobId int,
     PRIMARY KEY (userid, JobId),
     FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (JobId) REFERENCES Job(JobId)
@@ -137,8 +113,7 @@ CREATE TABLE Matching (
 -- create a SwapRight table. It has a user email and Jobid are the primary key
 CREATE TABLE SwapRight (
     userid uuid,
-    JobId int NOT NULL,
-    company varchar NOT NULL,
+    JobId int,
     PRIMARY KEY (userid, JobId),
     FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (JobId) REFERENCES Job(JobId)
