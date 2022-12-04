@@ -47,14 +47,28 @@ serve(async (req) => {
     let firstname = body.firstname
     let lastname = body.lastname
     let age = body.age
-    //const USER_EMAIL_TEST = 'robertobrown@example.net'
+    let skills = body.skills
+    const USER_ID_TEST = 'dc52141d-892e-4928-9c15-db593d1cb6b6'
     const { data, error } = await supabaseClient.from('jobseeker').update({
       'salary': salary,
       'firstname': firstname,
       'lastname': lastname,
       'age' : age,
-    }).eq('email', user.email)
+    }).eq('id', user.id)
     
+    // iteraty over skills
+    for (let i = 0; i < skills.length; i++) {
+      // check if skill exists
+      const { data, error } = await supabaseClient.from('userskill').select('*').eq('skill', skills[i]).eq('userid', user.id)
+      //if not exists, create it
+      if (data.length == 0) {
+        // get largest id from skills table 
+        const { largest, error1 } = await supabaseClient.from('userskill').select('id', { count: 'exact' })
+        const { data, error2 } = await supabaseClient.from('userskill').insert(
+          { 'name': skills[i], 'userid': user.id, 'id' : largest + 1 }
+        )
+      }
+    }
     
     if (error) throw error
 
