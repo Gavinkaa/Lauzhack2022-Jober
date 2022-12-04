@@ -55,27 +55,27 @@ class AuthRepository {
   }
 
   Future<void> _fetchUser() async {
-    // final response = await Supabase.instance.client
-    //     .from('profiles')
-    //     .select()
-    //     .eq('id', _user!.id)
-    //     .execute();
-    // final data = response.data;
-    // if (data != null) {
-    //   final userProfile = UserProfile.fromJson(jsonDecode(data[0]['data']));
-    //   return userProfile;
-    // } else {
-    //   throw Exception('Failed to get user');
-    // }
     print('USER IS: $_user');
 
     _userProfile = UserProfile(
-        firstName: 'FirstName', lastName: 'LastName', email: 'Email');
+        firstName: 'John',
+        lastName: 'Doe',
+        email: _user!.email!,
+        salary: 0,
+        skills: ['Java', 'Flutter'],
+        location: {'country': 'CH', 'postalcode': '1234'},
+        level: 'Junior');
   }
 
   UserProfile getUser() {
     return UserProfile(
-        firstName: 'FirstName', lastName: 'LastName', email: 'Email');
+        firstName: 'John',
+        lastName: 'Doe',
+        email: _user!.email!,
+        salary: 0,
+        skills: ['Java', 'Flutter'],
+        location: {'country': 'CH', 'postalcode': '1234'},
+        level: 'Junior');
 
     if (_userProfile == null) {
       throw Exception('Failed to get user');
@@ -83,8 +83,22 @@ class AuthRepository {
     return _userProfile!;
   }
 
+  Future<void> pushChanges() async {}
+
   Future<void> setUser(UserProfile userProfile) async {
-    // TODO
+    // '{"salary":"6969", "firstname" : "TTT", "lastname" : "Cena", "age" : "69", "skills" : "["Java", "Python"]" }'
+    final response = await supabaseClient.functions.invoke('setUser', body: {
+      'salary': 422,
+      'firstname': userProfile.firstName,
+      'lastname': userProfile.lastName,
+      'age': 422,
+      'skills': jsonEncode(['Java']),
+    });
+  }
+
+  Future<void> dougyStyle() async {
+    final response = await supabaseClient.functions.invoke('getUserData');
+    print(response.data);
   }
 
   User? get user => _user;
