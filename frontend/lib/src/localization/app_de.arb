@@ -22,5 +22,7 @@
 	"yourEmail": "Ihre E-Mail",
 	"yourPassword": "Ihr Passwort",
 	"alreadyHaveAnAccount": "Sie haben bereits ein Konto?",
-	"dontHaveAnAccount": "Sie haben noch kein Konto?"
+	"dontHaveAnAccount": "Sie haben noch kein Konto?",
+	"waitingForAnswer": "Auf eine Antwort warten",
+	"job": "Job"
 }

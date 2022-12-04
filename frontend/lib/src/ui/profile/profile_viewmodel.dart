@@ -17,9 +17,8 @@ class ProfileViewModel extends ChangeNotifier {
   }
 
   Future<void> signOut(BuildContext context) async {
-    Navigator.pushNamedAndRemoveUntil(
-        context, WelcomeView.routeName, (route) => false);
     await _authRepository.signOut();
+    Navigator.pushNamedAndRemoveUntil(context, WelcomeView.routeName, (route) => false);
     notifyListeners();
   }
 
