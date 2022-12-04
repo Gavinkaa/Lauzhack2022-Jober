@@ -1,5 +1,7 @@
 # LauzHack 2022 - Jober 💻
 
+<img src="https://user-images.githubusercontent.com/20269233/205486781-ae959009-0bbe-46e2-a912-b64f3e9dd1ba.jpeg" alt="screen" width="10%" />
+
 
 ## Motivation
 
