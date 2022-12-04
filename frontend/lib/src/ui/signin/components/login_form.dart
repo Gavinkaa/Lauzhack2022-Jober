@@ -29,8 +29,8 @@ class LoginForm extends StatelessWidget {
             validator: (val) => viewModel.validateNotNull(val, AppLocalizations.of(context)!.email, context),
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.yourEmail,
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(16.0),
+              prefixIcon: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Icon(Icons.person),
               ),
             ),
@@ -45,8 +45,8 @@ class LoginForm extends StatelessWidget {
               validator: (val) => viewModel.validateNotNull(val, AppLocalizations.of(context)!.password, context),
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.yourPassword,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Icon(Icons.lock),
                 ),
               ),

@@ -65,7 +65,7 @@ class ProfileView extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            Icon(Icons.email),
+            const Icon(Icons.email),
             const SizedBox(width: 10),
             Text(viewModel.userEmail == '' ? 'EMAIL' : viewModel.userEmail),
           ],
@@ -73,7 +73,7 @@ class ProfileView extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            Icon(Icons.attach_money),
+            const Icon(Icons.attach_money),
             const SizedBox(width: 10),
             Text(NumberFormat.decimalPattern().format(viewModel.userSalary))
           ],
