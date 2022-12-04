@@ -9,8 +9,6 @@ DROP TABLE UserLevel cascade;
 DROP TABLE Company cascade;
 DROP TABLE Job cascade;
 DROP TABLE JobSkill cascade;
-DROP TABLE JobLocation cascade;
-DROP TABLE JobLevel cascade;
 DROP TABLE Matching cascade;
 DROP TABLE SwapRight cascade;
 
@@ -20,19 +18,19 @@ CREATE TABLE JobSeeker (
     salary int,
     firstname VARCHAR(20),
     lastname VARCHAR(20),
-    age int(3)
+    age int
 );
 
 --create a table for skills which are strings
 CREATE TABLE Skill (
-    skill varchar PRIMARY KEY,
+    skill varchar PRIMARY KEY
 );
 
 --create a table for the many-to-one relationship between users and skills
 CREATE TABLE UserSkill (
     userid uuid,
     skill varchar,
-    PRIMARY KEY (uuid, skill),
+    PRIMARY KEY (userid, skill),
     FOREIGN KEY (userid) REFERENCES JobSeeker(id),
     FOREIGN KEY (skill) REFERENCES Skill(skill)
 );
@@ -57,7 +55,7 @@ CREATE TABLE UserLocation (
 
 --create a table for the level of experience which are strings
 CREATE TABLE Level (
-    level varchar PRIMARY KEY,
+    level varchar PRIMARY KEY
 );
 
 --create a table for the many-to-one relationship between users and experience
