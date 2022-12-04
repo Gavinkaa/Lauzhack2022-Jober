@@ -9,6 +9,6 @@ class WelcomeViewModel {
   }
 
   void goToSignupView(BuildContext context) {
-    Navigator.pushNamed(context, SignupView.routeName);
+    Navigator.pushNamed(context, SignUpView.routeName);
   }
 }

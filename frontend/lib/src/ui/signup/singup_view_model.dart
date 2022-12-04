@@ -4,16 +4,17 @@ import 'package:jober/src/ui/signin/signin_view.dart';
 import 'package:more_widgets/more_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SignupViewModel {
+class SignUpViewModel {
   late AuthRepository _authRepository;
 
-  SignupViewModel() {
+  SignUpViewModel() {
     _authRepository = AuthRepository.getInstance();
   }
 
   Future<void> signup({required String email, required String password, required BuildContext context}) async {
     await _authRepository.signUp(email, password);
-    Dialogs.infoDialog(context: context, title: AppLocalizations.of(context)!.verifyYourEmail, message: AppLocalizations.of(context)!.verifyYourEmailText,
+    Dialogs.infoDialog(context: context, title: AppLocalizations.of(context)!.verifyYourEmail,
+        message: AppLocalizations.of(context)!.verifyYourEmailText,
         buttonText: AppLocalizations.of(context)!.ok.toUpperCase(), onPressed: () {
           Navigator.pushReplacementNamed(context, SignInView.routeName);
         });
@@ -25,6 +26,10 @@ class SignupViewModel {
       return '${AppLocalizations.of(context)!.pleaseEnterYour} $field';
     }
     return null;
+  }
+
+  void navigateToSignIn(BuildContext context) {
+    Navigator.pushReplacementNamed(context, SignInView.routeName);
   }
 
   bool validateForm(GlobalKey<FormState> formKey) {

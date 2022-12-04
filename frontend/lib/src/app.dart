@@ -30,6 +30,10 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: const [
         Locale('en', ''), // English, no country code
+        Locale('fr', ''), // French, no country code
+        Locale('it', ''), // Italian, no country code
+        Locale('de', ''), // German, no country code
+        Locale('es', ''), // Spanish, no country code
       ],
 
       onGenerateTitle: (BuildContext context) =>
@@ -49,14 +53,8 @@ class MyApp extends StatelessWidget {
                   return NavigationView(key: key,);
                 case MatchView.routeName:
                   return MatchView(key: key,);
-                case SignInView.routeName:
-                  return SignInView(key: key,);
-                case WelcomeView.routeName:
-                  return WelcomeView(key: key,);
-                case SignupView.routeName:
-                  return SignupView(key: key,);
                 default:
-                  return WelcomeView(key: key,);
+                  return NavigationView(key: key,);
               }
             } else {
               switch (routeSettings.name) {
@@ -64,8 +62,8 @@ class MyApp extends StatelessWidget {
                   return SignInView(key: key,);
                 case WelcomeView.routeName:
                   return WelcomeView(key: key,);
-                case SignupView.routeName:
-                  return SignupView(key: key,);
+                case SignUpView.routeName:
+                  return SignUpView(key: key,);
                 default:
                   return WelcomeView(key: key,);
               }

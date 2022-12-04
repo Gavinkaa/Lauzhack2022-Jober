@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/navigation/navigation_view.dart';
-import 'package:more_widgets/more_widgets.dart';
+import 'package:jober/src/ui/signup/signup_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:more_widgets/more_widgets.dart';
 
 class SignInViewModel extends ChangeNotifier {
   final _authRepository = AuthRepository.getInstance();
@@ -36,5 +37,9 @@ class SignInViewModel extends ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  void navigateToSignUp(BuildContext context) {
+    Navigator.pushReplacementNamed(context, SignUpView.routeName);
   }
 }

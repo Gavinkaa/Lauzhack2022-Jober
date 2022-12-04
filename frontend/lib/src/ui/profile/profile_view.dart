@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
