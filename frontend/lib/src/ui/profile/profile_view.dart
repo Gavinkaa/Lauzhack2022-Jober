@@ -3,6 +3,7 @@ import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jober/src/ui/theme/app_colors.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({Key? key}) : super(key: key);
@@ -49,21 +50,33 @@ class ProfileView extends StatelessWidget {
                             key: _formKey,
                             child: Column(
                               children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: localizations.firstName),
-                                  initialValue: viewModel.userFirstName,
-                                  validator: viewModel.validateFirstName,
-                                  onSaved: (value) =>
-                                      viewModel.userFirstName = value!,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    cursorColor: Theme.of(context)
+                                        .extension<AppColors>()!
+                                        .primaryColor,
+                                    decoration: InputDecoration(
+                                        labelText: localizations.firstName),
+                                    initialValue: viewModel.userFirstName,
+                                    validator: viewModel.validateFirstName,
+                                    onSaved: (value) =>
+                                        viewModel.userFirstName = value!,
+                                  ),
                                 ),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: localizations.lastName),
-                                  initialValue: viewModel.userLastName,
-                                  validator: viewModel.validateLastName,
-                                  onSaved: (value) =>
-                                      viewModel.userLastName = value!,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    cursorColor: Theme.of(context)
+                                        .extension<AppColors>()!
+                                        .primaryColor,
+                                    decoration: InputDecoration(
+                                        labelText: localizations.lastName),
+                                    initialValue: viewModel.userLastName,
+                                    validator: viewModel.validateLastName,
+                                    onSaved: (value) =>
+                                        viewModel.userLastName = value!,
+                                  ),
                                 ),
                                 ElevatedButton(
                                   child: Text(localizations.save),
