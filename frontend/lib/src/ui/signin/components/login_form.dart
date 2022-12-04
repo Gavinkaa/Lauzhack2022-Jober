@@ -3,6 +3,7 @@ import 'package:jober/src/ui/signin/signin_viewmodel.dart';
 import 'package:jober/src/ui/signup/signup_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:jober/src/ui/widgets/already_have_an_account_acheck.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class LoginForm extends StatelessWidget {
@@ -26,9 +27,9 @@ class LoginForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: Theme.of(context).extension<AppColors>()!.primaryColor,
             onSaved: (email) {this.email = email!;},
-            validator: (val) => viewModel.validateNotNull(val, 'email'),
+            validator: (val) => viewModel.validateNotNull(val, AppLocalizations.of(context)!.email, context),
             decoration: InputDecoration(
-              hintText: "Your email",
+              hintText: AppLocalizations.of(context)!.yourEmail,
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Icon(Icons.person),
@@ -42,9 +43,9 @@ class LoginForm extends StatelessWidget {
               obscureText: true,
               onSaved: (password) {this.password = password!;},
               cursorColor: Theme.of(context).extension<AppColors>()!.primaryColor,
-              validator: (val) => viewModel.validateNotNull(val, 'password'),
+              validator: (val) => viewModel.validateNotNull(val, AppLocalizations.of(context)!.password, context),
               decoration: InputDecoration(
-                hintText: "Your password",
+                hintText: AppLocalizations.of(context)!.yourPassword,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Icon(Icons.lock),
@@ -63,7 +64,7 @@ class LoginForm extends StatelessWidget {
                 }
               },
               child: Text(
-                "Login".toUpperCase(),
+                AppLocalizations.of(context)!.signIn.toUpperCase(),
               ),
             ),
           ),

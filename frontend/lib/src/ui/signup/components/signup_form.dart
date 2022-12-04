@@ -3,6 +3,7 @@ import 'package:jober/src/ui/signin/signin_view.dart';
 import 'package:jober/src/ui/signup/singup_view_model.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:jober/src/ui/widgets/already_have_an_account_acheck.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpForm extends StatelessWidget {
   SignupViewModel viewModel;
@@ -26,10 +27,10 @@ class SignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: Theme.of(context).extension<AppColors>()!.primaryColor,
             onSaved: (email) {this.email = email!;},
-            validator: (val) => viewModel.validateNotNull(val, 'email'),
-            decoration: const InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
+            validator: (val) => viewModel.validateNotNull(val, AppLocalizations.of(context)!.email, context),
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.yourEmail,
+              prefixIcon: const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Icon(Icons.person),
               ),
@@ -40,12 +41,12 @@ class SignUpForm extends StatelessWidget {
             child: TextFormField(
               textInputAction: TextInputAction.done,
               obscureText: true,
-              validator: (val) => viewModel.validateNotNull(val, 'password'),
+              validator: (val) => viewModel.validateNotNull(val, AppLocalizations.of(context)!.password, context),
               onSaved: (password) {this.password = password!;},
               cursorColor: Theme.of(context).extension<AppColors>()!.primaryColor,
-              decoration: const InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.yourPassword,
+                prefixIcon: const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Icon(Icons.lock),
                 ),
@@ -62,7 +63,7 @@ class SignUpForm extends StatelessWidget {
                   viewModel.signup(context: context, email: email, password: password);
                 }
               },
-              child: Text("Sign Up".toUpperCase()),
+              child: Text(AppLocalizations.of(context)!.signUp.toUpperCase()),
             ),
           ),
           const SizedBox(height: 16.0),

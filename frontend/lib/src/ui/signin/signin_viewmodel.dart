@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/navigation/navigation_view.dart';
 import 'package:more_widgets/more_widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignInViewModel extends ChangeNotifier {
   final _authRepository = AuthRepository.getInstance();
@@ -15,14 +16,16 @@ class SignInViewModel extends ChangeNotifier {
       await _authRepository.signIn(email, password);
       Navigator.pushNamedAndRemoveUntil(context, NavigationView.routeName, (route) => false);
     } catch (e) {
-      Dialogs.infoDialog(context: context, title: "Error", message: "An error occured while trying to sign in", buttonText: "OK");
+      Dialogs.infoDialog(context: context, title: AppLocalizations.of(context)!.error,
+          message: AppLocalizations.of(context)!.errorWhenSignIn,
+          buttonText: AppLocalizations.of(context)!.ok.toUpperCase());
     }
 
   }
 
-  String? validateNotNull(String? value, String field) {
+  String? validateNotNull(String? value, String field, BuildContext context) {
     if (value == null || value.isEmpty) {
-      return 'Please enter your $field';
+      return '${AppLocalizations.of(context)!.pleaseEnterYour} $field';
     }
     return null;
   }

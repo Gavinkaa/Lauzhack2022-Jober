@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:jober/src/ui/welcome/welcome_view_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   final WelcomeViewModel viewModel;
@@ -21,7 +22,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               viewModel.goToLoginView(context);
             },
             child: Text(
-              "Login".toUpperCase(),
+              AppLocalizations.of(context)!.signIn.toUpperCase(),
             ),
           ),
         ),
@@ -36,7 +37,7 @@ class LoginAndSignupBtn extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).extension<AppColors>()!.primaryLightColor, elevation: 0),
             child: Text(
-              "Sign Up".toUpperCase(),
+              AppLocalizations.of(context)!.signUp.toUpperCase(),
               style: const TextStyle(color: Colors.black),
             ),
           ),

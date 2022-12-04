@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeImage extends StatelessWidget {
   const WelcomeImage({
@@ -11,7 +12,7 @@ class WelcomeImage extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "WELCOME TO EDU",
+          AppLocalizations.of(context)!.welcomeToJober,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 16.0 * 2),

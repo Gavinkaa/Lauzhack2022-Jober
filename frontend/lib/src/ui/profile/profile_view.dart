@@ -42,7 +42,7 @@ class ProfileView extends StatelessWidget {
                           const SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: viewModel.signOut,
-                            child: const Text('Sign out'),
+                            child: Text( AppLocalizations.of(context)!.signOut),
                           )
                         ]
                       : [

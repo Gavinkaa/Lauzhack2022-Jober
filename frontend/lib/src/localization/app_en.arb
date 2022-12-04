@@ -6,5 +6,19 @@
   "firstName": "First Name",
   "lastName": "Last Name",
   "save": "Save",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "signUp": "Sign Up",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "email": "Email",
+  "password": "Password",
+  "yourEmail": "Your Email",
+  "yourPassword": "Your Password",
+  "errorWhenSignIn": "An error occured while trying to sign in",
+  "error": "Error",
+  "ok": "Ok",
+  "pleaseEnterYour": "Please enter your",
+  "verifyYourEmail": "Verify your email",
+  "verifyYourEmailText": "You need to verify your email before you can login",
+  "welcomeToJober": "Welcome to Jober"
 }
