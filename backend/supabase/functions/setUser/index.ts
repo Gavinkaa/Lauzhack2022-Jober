@@ -23,52 +23,52 @@ serve(async (req) => {
       { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
     )
 
-    // const {
-    //   data: { user },
-    // } = await supabaseClient.auth.getUser()
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser()
 
-    // console.log(user)
-    // if (!user) {
-    //   return new Response(JSON.stringify({ error: 'User not connected', error_code: 'user-not-connected' }), {
-    //     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    //     status: 400,
-    //   })
-    // }
-    // //get content from request body
-    // const body = await req.json()
-    // console.log(body)
-    // if (!body) {
-    //   return new Response(JSON.stringify({ error: 'No body', error_code: 'no-body' }), {
-    //     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    //     status: 400,
-    //   })
-    // }
-
-    // let salary = body.salary
-    // let firstname = body.firstname
-    // let lastname = body.lastname
-    // let age = body.age
-    // let skills = body.skills
-    // //const USER_ID_TEST = '5f99a26d-d0a3-4bb0-b028-039b43ce9388'
-    // const { data, error } = await supabaseClient.from('jobseeker').update({
-    //   'salary': salary,
-    //   'firstname': firstname,
-    //   'lastname': lastname,
-    //   'age': age,
-    // }).eq('id', user.id)
-
-    const user = {
-      id: '3bfb2bd0-492b-4c6f-bf19-1e01481e1caf',
+    console.log(user)
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'User not connected', error_code: 'user-not-connected' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      })
     }
-    const body = {
-      salary: 1000,
-      firstname: "douglas",
-      lastname: "le_bg",
-      age: 23,
-      skills: ['Dart'],
-      location: { country: 'CH', postalCode: 1001 },
-      level: 'Senior'
+    //get content from request body
+    const body = await req.json()
+    console.log(body)
+    if (!body) {
+      return new Response(JSON.stringify({ error: 'No body', error_code: 'no-body' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      })
     }
+
+    let salary = body.salary
+    let firstname = body.firstname
+    let lastname = body.lastname
+    let age = body.age
+    let skills = body.skills
+    //const USER_ID_TEST = '5f99a26d-d0a3-4bb0-b028-039b43ce9388'
+    const { data, error } = await supabaseClient.from('jobseeker').update({
+      'salary': salary,
+      'firstname': firstname,
+      'lastname': lastname,
+      'age': age,
+    }).eq('id', user.id)
+
+    // const user = {
+    //   id: '3bfb2bd0-492b-4c6f-bf19-1e01481e1caf',
+    // }
+    // const body = {
+    //   salary: 1000,
+    //   firstname: "douglas",
+    //   lastname: "le_bg",
+    //   age: 23,
+    //   skills: ['Dart'],
+    //   location: { country: 'CH', postalCode: 1001 },
+    //   level: 'Senior'
+    // }
 
 
     // add the skill
