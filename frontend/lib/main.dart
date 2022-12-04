@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'src/app.dart';
-import 'src/models/repositories/auth_repository.dart';
 
 void main() async {
   await Supabase.initialize(

@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:jober/src/models/data/user_profile.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
+import 'package:jober/src/ui/welcome/welcome_view.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   final _authRepository = AuthRepository.getInstance();
 
-  Future<void> signOut() async {
+  Future<void> signUp(String email, String password) async {
+    await _authRepository.signUp(email, password);
+    notifyListeners();
+  }
+
+  Future<void> signIn(String email, String password) async {
+    await _authRepository.signIn(email, password);
+    notifyListeners();
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    Navigator.pushNamedAndRemoveUntil(
+        context, WelcomeView.routeName, (route) => false);
     await _authRepository.signOut();
     notifyListeners();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/match/match_view.dart';
 import 'package:jober/src/ui/navigation/navigation_view.dart';
 import 'package:jober/src/ui/profile/profile_view.dart';
@@ -40,22 +41,36 @@ class MyApp extends StatelessWidget {
         return MaterialPageRoute<void>(
           settings: routeSettings,
           builder: (BuildContext context) {
-            switch (routeSettings.name) {
-              case ProfileView.routeName:
-                return ProfileView(key: key,);
-              case NavigationView.routeName:
-                return NavigationView(key: key,);
-              case MatchView.routeName:
-                return MatchView(key: key,);
-              case SignInView.routeName:
-                return SignInView(key: key,);
-              case WelcomeView.routeName:
-                return WelcomeView(key: key,);
-              case SignupView.routeName:
-                return SignupView(key: key,);
-              default:
-                return WelcomeView(key: key,);
+            if (AuthRepository.getInstance().isConnected()) {
+              switch (routeSettings.name) {
+                case ProfileView.routeName:
+                  return ProfileView(key: key,);
+                case NavigationView.routeName:
+                  return NavigationView(key: key,);
+                case MatchView.routeName:
+                  return MatchView(key: key,);
+                case SignInView.routeName:
+                  return SignInView(key: key,);
+                case WelcomeView.routeName:
+                  return WelcomeView(key: key,);
+                case SignupView.routeName:
+                  return SignupView(key: key,);
+                default:
+                  return WelcomeView(key: key,);
+              }
+            } else {
+              switch (routeSettings.name) {
+                case SignInView.routeName:
+                  return SignInView(key: key,);
+                case WelcomeView.routeName:
+                  return WelcomeView(key: key,);
+                case SignupView.routeName:
+                  return SignupView(key: key,);
+                default:
+                  return WelcomeView(key: key,);
+              }
             }
+
           },
         );
       },
