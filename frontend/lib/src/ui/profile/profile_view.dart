@@ -42,6 +42,11 @@ class ProfileView extends StatelessWidget {
         ? 'POSTAL_CODE NOT DEFINED'
         : viewModel.userLocation['postalcode'];
 
+    final String userFirstNameToPrint =
+        viewModel.userFirstName == '' ? 'FIRST_NAME' : viewModel.userFirstName;
+    final String userLastNameToPrint =
+        viewModel.userLastName == '' ? 'LAST_NAME' : viewModel.userLastName;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -51,7 +56,7 @@ class ProfileView extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          '${viewModel.userFirstName} ${viewModel.userLastName}',
+          userFirstNameToPrint + ' ' + userLastNameToPrint,
           style: const TextStyle(fontSize: 18),
         ),
         Text('${viewModel.userAge.toString()} years old'),
@@ -60,7 +65,7 @@ class ProfileView extends StatelessWidget {
           children: [
             Icon(Icons.email),
             const SizedBox(width: 10),
-            Text('${viewModel.userEmail}')
+            Text(viewModel.userEmail == '' ? 'EMAIL' : viewModel.userEmail),
           ],
         ),
         const SizedBox(height: 10),
