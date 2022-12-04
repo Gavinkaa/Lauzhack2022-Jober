@@ -35,12 +35,60 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getUser() async {
-    _userProfile = await _authRepository.getUser();
+  // NEW VERSION
+
+  bool _editMode = false;
+
+  String get userFirstName => _userProfile!.firstName;
+
+  String get userLastName => _userProfile!.lastName;
+
+  bool get editMode => _editMode;
+
+  void getUser() {
+    final userProfile = _authRepository.getUser();
+
+    if (_userProfile != userProfile) {
+      _userProfile = userProfile;
+      notifyListeners();
+    }
+  }
+
+  set userFirstName(String firstName) {
+    _userProfile!.firstName = firstName;
+    //TODO: update database
     notifyListeners();
   }
 
-  void getUserAs() {
-    _authRepository.getUserAs();
+  set userLastName(String lastName) {
+    _userProfile!.lastName = lastName;
+    //TODO: update database
+    notifyListeners();
+  }
+
+  void toggleEditMode() {
+    _editMode = !_editMode;
+    notifyListeners();
+  }
+
+  String? validateFirstName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your first name';
+    }
+    return null;
+  }
+
+  String? validateLastName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your last name';
+    }
+    return null;
+  }
+
+  void validateForm(GlobalKey<FormState> formKey) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      toggleEditMode();
+    }
   }
 }
