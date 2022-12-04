@@ -52,6 +52,7 @@ class AuthRepository {
   Future<void> signOut() async {
     await supabaseClient.auth.signOut();
     _user = null;
+    _userProfile = null;
   }
 
   Future<void> _fetchUser() async {
@@ -65,22 +66,6 @@ class AuthRepository {
         skills: ['Java', 'Flutter'],
         location: {'country': 'CH', 'postalcode': '1234'},
         level: 'Junior');
-  }
-
-  UserProfile getUser() {
-    return UserProfile(
-        firstName: 'John',
-        lastName: 'Doe',
-        email: _user!.email!,
-        salary: 0,
-        skills: ['Java', 'Flutter'],
-        location: {'country': 'CH', 'postalcode': '1234'},
-        level: 'Junior');
-
-    if (_userProfile == null) {
-      throw Exception('Failed to get user');
-    }
-    return _userProfile!;
   }
 
   Future<void> pushChanges() async {}
@@ -102,8 +87,6 @@ class AuthRepository {
   }
 
   User? get user => _user;
-
-  bool isConnected() {
-    return _user != null;
-  }
+  UserProfile? get userProfile => _userProfile;
+  bool isConnected() => _user != null;
 }
