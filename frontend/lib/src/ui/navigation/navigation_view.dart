@@ -1,13 +1,14 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jober/src/ui/chat/chat_view.dart';
 import 'package:jober/src/ui/match/match_view.dart';
 import 'package:jober/src/ui/navigation/navigation_view_model.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jober/src/ui/profile/profile_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class NavigationView extends StatelessWidget {
   const NavigationView({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class NavigationView extends StatelessWidget {
       case 1:
         return MatchView();
       case 2:
-        return Container();
+        return ChatView();
       default:
         return Container();
     }

@@ -24,5 +24,7 @@
 	"alreadyHaveAnAccount": "¿Ya tiene una cuenta?",
 	"dontHaveAnAccount": "¿No tiene una cuenta?",
 	"waitingForAnswer": "Esperando una respuesta",
-	"job": "Trabajo"
+	"job": "Trabajo",
+	"age": "años",
+	"salary": "Salario"
 }

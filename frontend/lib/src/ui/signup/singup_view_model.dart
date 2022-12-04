@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/signin/signin_view.dart';
 import 'package:more_widgets/more_widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpViewModel {
   late AuthRepository _authRepository;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/models/data/user_profile.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/welcome/welcome_view.dart';
 

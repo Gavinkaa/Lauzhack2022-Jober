@@ -8,8 +8,13 @@ class ChatViewModel {
     _backendRepository = BackendRepository.getInstance();
   }
 
-  get jobs => null;
   List<Job> getJobs() {
     return _backendRepository.jobs;
+  }
+
+  Future<void> fetchJobs() async {
+    if (_backendRepository.jobs.isEmpty) {
+      await _backendRepository.fetchJobs();
+    }
   }
 }

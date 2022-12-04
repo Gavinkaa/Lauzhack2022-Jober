@@ -27,19 +27,41 @@ serve(async (req) => {
           { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
       )
 
-      await supabaseClient.from('')
+      const job = await supabaseClient.from('job').select('*')
+      const jobSkills = await supabaseClient.from('jobskill').select('*')
+
+      if (job.error) throw job.error
+      if (jobSkills.error) throw jobSkills.error
+
+      // Let dataWithSkills be the map of data with a new key 'skills' that is an array of Strings
+      const dataWithSkills = job.data.map((job) => {
+          // Filter the jobData array to only include the skills for the current job
+          const skills = jobSkills.data.filter((jobSkill) => jobSkill.jobid === job.jobid).map((jobSkill) => jobSkill.skill)
+          // Return the job with the skills array
+          return {
+              ...job,
+              skills
+          }
+      })
+
+      let data = dataWithSkills
+
+      return new Response(JSON.stringify(data), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      })
+    } catch (error) {
+      console.error(error)
+
+      return new Response(JSON.stringify({ error: error.message }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      })
     }
 
 
-  const { name } = await req.json()
-  const data = {
-    message: `Hello ${name}!`,
-  }
 
-  return new Response(
-    JSON.stringify(data),
-    { headers: { "Content-Type": "application/json" } },
-  )
+
 })
 
 // To invoke:

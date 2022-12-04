@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jober/src/ui/signin/signin_viewmodel.dart';
-import 'package:jober/src/ui/signup/signup_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:jober/src/ui/widgets/already_have_an_account_acheck.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class LoginForm extends StatelessWidget {
