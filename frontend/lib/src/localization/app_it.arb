@@ -29,5 +29,10 @@
 	"salary": "Stipendio",
 	"select": "Selezionare",
 	"skills": "Abilita",
-	"tapToSelect": "Tocca per selezionarne uno o più"
+	"tapToSelect": "Tocca per selezionarne uno o più",
+	"countryCode": "prefisso internazionale",
+	"level": "Livello",
+	"notDefined": "N / A",
+	"postalCode": "codice postale",
+	"tapToSelectOne": "Tocca per selezionarne uno"
 }

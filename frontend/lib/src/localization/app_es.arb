@@ -29,5 +29,10 @@
 	"salary": "Salario",
 	"select": "Seleccionar",
 	"skills": "Habilidades",
-	"tapToSelect": "Toque para seleccionar uno o más"
+	"tapToSelect": "Toque para seleccionar uno o más",
+	"countryCode": "Código de país",
+	"level": "Nivel",
+	"notDefined": "N / A",
+	"postalCode": "código postal",
+	"tapToSelectOne": "Toca para seleccionar uno"
 }

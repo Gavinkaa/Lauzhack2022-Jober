@@ -29,5 +29,10 @@
 	"salary": "Gehalt",
 	"select": "wählen",
 	"skills": "Kompetenzen",
-	"tapToSelect": "Tippen Sie, um eine oder mehrere auszuwählen"
+	"tapToSelect": "Tippen Sie, um eine oder mehrere auszuwählen",
+	"countryCode": "Landesvorwahl",
+	"level": "Niveau",
+	"notDefined": "N / A",
+	"postalCode": "Postleitzahl",
+	"tapToSelectOne": "Tippen Sie, um eine auszuwählen"
 }
