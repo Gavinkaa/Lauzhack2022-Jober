@@ -68,6 +68,28 @@ class MyApp extends StatelessWidget {
                   return WelcomeView(key: key,);
               }
             }
+
+            switch (routeSettings.name) {
+              case ProfileView.routeName:
+                return ProfileView(key: key,);
+              case NavigationView.routeName:
+                return NavigationView(key: key,);
+              case MatchView.routeName:
+                return MatchView(key: key,);
+              case SignInView.routeName:
+                return SignInView(key: key,);
+              case WelcomeView.routeName:
+                return WelcomeView(key: key,);
+              case SignUpView.routeName:
+                return SignUpView(key: key,);
+              default:
+                if (AuthRepository.getInstance().isConnected()) {
+                  return NavigationView(key: key,);
+                } else {
+                  return WelcomeView(key: key,);
+                }
+                return NavigationView(key: key,);
+            }
           },
         );
       },
