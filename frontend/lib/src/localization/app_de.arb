@@ -26,5 +26,8 @@
 	"waitingForAnswer": "Auf eine Antwort warten",
 	"job": "Job",
 	"age": "Alter",
-	"salary": "Gehalt"
+	"salary": "Gehalt",
+	"select": "wählen",
+	"skills": "Kompetenzen",
+	"tapToSelect": "Tippen Sie, um eine oder mehrere auszuwählen"
 }
