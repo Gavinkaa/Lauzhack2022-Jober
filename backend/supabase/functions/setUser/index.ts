@@ -28,48 +28,85 @@ serve(async (req) => {
     } = await supabaseClient.auth.getUser()
 
     console.log(user)
-    if(!user) {
-      return new Response(JSON.stringify({ error: 'User not connected', error_code : 'user-not-connected' }), {
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'User not connected', error_code: 'user-not-connected' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,
       })
     }
-    // get content from request body
+    //get content from request body
     const body = await req.json()
     console.log(body)
-    if(!body) {
-      return new Response(JSON.stringify({ error: 'No body', error_code : 'no-body' }), {
+    if (!body) {
+      return new Response(JSON.stringify({ error: 'No body', error_code: 'no-body' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,
       })
     }
+    // const user = {
+    //   id: '3bfb2bd0-492b-4c6f-bf19-1e01481e1caf',
+    // }
+    // const body = {
+    //   salary: 1000,
+    //   firstname: "douglas",
+    //   lastname: "le_bg",
+    //   age: 23,
+    //   skills: ['Dart']
+    //   //skills: ['Java']
+    // }
+
     let salary = body.salary
     let firstname = body.firstname
     let lastname = body.lastname
     let age = body.age
     let skills = body.skills
-    const USER_ID_TEST = 'dc52141d-892e-4928-9c15-db593d1cb6b6'
+    //const USER_ID_TEST = '5f99a26d-d0a3-4bb0-b028-039b43ce9388'
     const { data, error } = await supabaseClient.from('jobseeker').update({
       'salary': salary,
       'firstname': firstname,
       'lastname': lastname,
-      'age' : age,
+      'age': age,
     }).eq('id', user.id)
-    
-    // iteraty over skills
+
+    let skillsToAdd = [] as string[]
+    // get all users skills
+    const { data: userSkills, error: userSkillsError } = await supabaseClient.from('userskill').select('*').eq('userid', user.id)
+    if (userSkillsError) throw userSkillsError
+    console.log("userSkills len" + userSkills.length)
+
+
+    //iteraty over skills
     for (let i = 0; i < skills.length; i++) {
+      console.log("Inside the loop with skills: " + skills[i])
       // check if skill exists
-      const { data, error } = await supabaseClient.from('userskill').select('*').eq('skill', skills[i]).eq('userid', user.id)
-      //if not exists, create it
-      if (data.length == 0) {
-        // get largest id from skills table 
-        const { largest, error1 } = await supabaseClient.from('userskill').select('id', { count: 'exact' })
-        const { data, error2 } = await supabaseClient.from('userskill').insert(
-          { 'name': skills[i], 'userid': user.id, 'id' : largest + 1 }
-        )
+      const { data: userSkillsData, error } = await supabaseClient.from('userskill').select('*').eq('skill', skills[i]).eq('userid', user.id)
+      if (error) throw error
+      console.log("userSkillsData: " + userSkillsData)
+      console.log("userSkillsData len: " + userSkillsData.length)
+      skillsToAdd.push(skills[i])
+
+    }
+    console.log("skillsToAdd: " + skillsToAdd)
+    for (let i = 0; i < userSkills.length; i++) {
+      if (!skillsToAdd.includes(userSkills[i].skill)) {
+        // remove the skill using supabaseClient
+        console.log("removing skill: " + userSkills[i].skill)
+        const response = await supabaseClient.from('userskill').delete().eq('skill', userSkills[i].skill).eq('userid', user.id)
+        if (response.error) throw response.error
       }
     }
-    
+
+    // we add the skills to the user
+    for (let i = 0; i < skillsToAdd.length; i++) {
+      // get the element with maximum id
+      const { data: maxIdData, error: maxIdError } = await supabaseClient.from('userskill').select('id', { count: 'exact' }).order('id', { ascending: false }).limit(1)
+      if (maxIdError) throw maxIdError
+      console.log("maxIdData: " + maxIdData)
+      const { res, error2 } = await supabaseClient.from('userskill').insert(
+        { 'skill': skillsToAdd[i], 'userid': user.id, 'id': maxIdData + 1 }
+      )
+    }
+
     if (error) throw error
 
     const contents = data
@@ -77,7 +114,7 @@ serve(async (req) => {
     // prints out the contents of the users table
     console.log(contents)
 
-    return new Response('Ok', {
+    return new Response(JSON.stringify({ 'success': 200 }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
