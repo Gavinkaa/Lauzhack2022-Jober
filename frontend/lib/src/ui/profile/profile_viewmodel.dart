@@ -29,6 +29,13 @@ class ProfileViewModel extends ChangeNotifier {
 
   String get userFirstName => _authRepository.userProfile!.firstName;
   String get userLastName => _authRepository.userProfile!.lastName;
+  int get userAge => _authRepository.userProfile!.age;
+  String get userEmail => _authRepository.userProfile!.email;
+  int get userSalary => _authRepository.userProfile!.salary;
+  List<String> get userSkills => _authRepository.userProfile!.skills;
+  Map<String, dynamic> get userLocation =>
+      _authRepository.userProfile!.location;
+  String get userLevel => _authRepository.userProfile!.level;
 
   bool get editMode => _editMode;
 
