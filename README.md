@@ -15,3 +15,14 @@ For the different sub-projects, you need to check the README.md in each folder. 
 you need to install the following dependencies:
 
 - Pre-commit: `pip install pre-commit` or `brew install pre-commit` (MacOS) and then `pre-commit install`
+
+
+## Team
+
+| Team        |
+| ----------- |
+| Ludovic      |
+| Douglas   |
+| Simon   | 
+| Asfoury   |
+
