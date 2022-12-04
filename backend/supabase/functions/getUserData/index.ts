@@ -34,14 +34,14 @@ serve(async (req) => {
         status: 400,
       })
     }
-    // define a user struct
+    //define a user struct
     // interface User {
     //   id: string;
     // }
-    // const uuid = "dc52141d-892e-4928-9c15-db593d1cb6b6"
+    // const uuid = "5f99a26d-d0a3-4bb0-b028-039b43ce9388"
 
-    // create a User instance with email
-    //const user: User = { id: uuid };
+    // // create a User instance with email
+    // const user: User = { id: uuid };
     //const { data, error } = await supabaseClient.from('jobseeker').select('email, userskill(skill)').eq('email', user.email)
     //const { user_data, user_error } = await supabaseClient.from('jobseeker').select('id, userskill(skill), userlevel(level), userlocation(country, postalcode)').eq('id', user.id)
     //if (user_error) throw user_error
@@ -68,8 +68,8 @@ serve(async (req) => {
       lastname: data[0].lastname,
       age: data[0].age,
       skills: skills,
-      levels: levels,
-      locations: locations
+      level: levels[0],
+      location: locations[0]
     }
 
     return new Response(JSON.stringify({ contents }), {
