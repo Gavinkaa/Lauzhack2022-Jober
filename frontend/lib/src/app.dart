@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:jober/src/ui/login/login_view.dart';
 import 'package:jober/src/ui/match/match_view.dart';
 import 'package:jober/src/ui/match_detail/match_detail_view.dart';
 import 'package:jober/src/ui/navigation/navigation_view.dart';
 import 'package:jober/src/ui/profile/profile_view.dart';
+import 'package:jober/src/ui/signup/signup_view.dart';
 import 'package:jober/src/ui/theme/app_theme.dart';
+import 'package:jober/src/ui/welcome/components/welcome_image.dart';
+import 'package:jober/src/ui/welcome/welcome_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -45,8 +49,14 @@ class MyApp extends StatelessWidget {
                 return NavigationView(key: key,);
               case MatchView.routeName:
                 return MatchView(key: key,);
+              case LoginView.routeName:
+                return LoginView(key: key,);
+              case WelcomeView.routeName:
+                return WelcomeView(key: key,);
+              case SignupView.routeName:
+                return SignupView(key: key,);
               default:
-                return NavigationView(key: key,);
+                return WelcomeView(key: key,);
             }
           },
         );

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/models/repositories/auth_repository.dart';
-import 'package:jober/src/ui/profile/profile_viewmodel.dart';
-import 'package:provider/provider.dart';
-
-import 'login_viewmodel.dart';
+import 'package:jober/src/ui/login/components/login_form.dart';
+import 'package:jober/src/ui/login/components/login_screen_top_image.dart';
+import 'package:jober/src/ui/widgets/background.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
@@ -11,26 +9,27 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ici ca build');
-    final viewModel = context.watch<LoginViewModel>();
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => viewModel.signUp(
-                  'supabase_ICI_CA_TEST@myburnier.ch', '12345678901'),
-              child: Text("SIGN UP"),
-            ),
-            ElevatedButton(
-              onPressed: () => viewModel.signIn(
-                  'supabase_ICI_CA_TEST@myburnier.ch', '12345678901'),
-              child: Text("SIGN IN"),
-            ),
-          ],
+      body: Background(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const LoginScreenTopImage(),
+              Row(
+                children: const [
+                  Spacer(),
+                  Expanded(
+                    flex: 8,
+                    child: LoginForm(),
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
