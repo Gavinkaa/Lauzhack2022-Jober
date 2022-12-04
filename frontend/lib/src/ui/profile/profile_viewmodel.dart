@@ -28,7 +28,6 @@ class ProfileViewModel extends ChangeNotifier {
   bool _editMode = false;
 
   String get userFirstName => _authRepository.userProfile!.firstName;
-
   String get userLastName => _authRepository.userProfile!.lastName;
 
   bool get editMode => _editMode;
@@ -49,13 +48,11 @@ class ProfileViewModel extends ChangeNotifier {
 
   set userFirstName(String firstName) {
     _authRepository.userProfile!.firstName = firstName;
-    //TODO: update database
     notifyListeners();
   }
 
   set userLastName(String lastName) {
     _authRepository.userProfile!.lastName = lastName;
-    //TODO: update database
     notifyListeners();
   }
 
@@ -86,9 +83,5 @@ class ProfileViewModel extends ChangeNotifier {
 
       toggleEditMode();
     }
-  }
-
-  void dougyStyle() async {
-    await _authRepository.dougyStyle();
   }
 }
