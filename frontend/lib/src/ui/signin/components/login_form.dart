@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:jober/src/ui/signin/signin_viewmodel.dart';
 import 'package:jober/src/ui/signup/signup_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:jober/src/ui/widgets/already_have_an_account_acheck.dart';
 
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({
+  SignInViewModel viewModel;
+  LoginForm({
     Key? key,
+    required this.viewModel,
   }) : super(key: key);
+
+  String email = "", password = "";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: Theme.of(context).extension<AppColors>()!.primaryColor,
-            onSaved: (email) {},
+            onSaved: (email) {this.email = email!;},
+            validator: (val) => viewModel.validateNotNull(val, 'email'),
             decoration: InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
@@ -32,7 +40,9 @@ class LoginForm extends StatelessWidget {
             child: TextFormField(
               textInputAction: TextInputAction.done,
               obscureText: true,
+              onSaved: (password) {this.password = password!;},
               cursorColor: Theme.of(context).extension<AppColors>()!.primaryColor,
+              validator: (val) => viewModel.validateNotNull(val, 'password'),
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
@@ -47,7 +57,11 @@ class LoginForm extends StatelessWidget {
             tag: "login_btn",
             transitionOnUserGestures: true,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (viewModel.validateForm(_formKey)) {
+                  viewModel.signIn(email, password, context);
+                }
+              },
               child: Text(
                 "Login".toUpperCase(),
               ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/ui/login/components/login_form.dart';
-import 'package:jober/src/ui/login/components/login_screen_top_image.dart';
+import 'package:jober/src/ui/signin/components/login_form.dart';
+import 'package:jober/src/ui/signin/components/login_screen_top_image.dart';
+import 'package:jober/src/ui/signin/signin_viewmodel.dart';
 import 'package:jober/src/ui/widgets/background.dart';
 
-class LoginView extends StatelessWidget {
-  LoginView({Key? key}) : super(key: key);
+class SignInView extends StatelessWidget {
+  SignInView({Key? key}) : super(key: key);
   static const routeName = "/login";
+  SignInViewModel _viewModel = SignInViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,11 @@ class LoginView extends StatelessWidget {
             children: <Widget>[
               const LoginScreenTopImage(),
               Row(
-                children: const [
+                children: [
                   Spacer(),
                   Expanded(
                     flex: 8,
-                    child: LoginForm(),
+                    child: LoginForm(viewModel: _viewModel),
                   ),
                   Spacer(),
                 ],

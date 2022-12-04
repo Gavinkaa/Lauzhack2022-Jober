@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/ui/login/login_view.dart';
-import 'package:jober/src/ui/signup/signup_view.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
+import 'package:jober/src/ui/welcome/welcome_view_model.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
+  final WelcomeViewModel viewModel;
   const LoginAndSignupBtn({
     Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   @override
@@ -17,14 +18,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           transitionOnUserGestures: true,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginView();
-                  },
-                ),
-              );
+              viewModel.goToLoginView(context);
             },
             child: Text(
               "Login".toUpperCase(),
@@ -37,14 +31,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           transitionOnUserGestures: true,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SignupView();
-                  },
-                ),
-              );
+              viewModel.goToSignupView(context);
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).extension<AppColors>()!.primaryLightColor, elevation: 0),
