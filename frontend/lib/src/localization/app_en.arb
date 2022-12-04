@@ -2,5 +2,9 @@
   "appTitle": "jober",
   "profile": "Profile",
   "match": "Match",
-  "chat": "Chat"
+  "chat": "Chat",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "save": "Save",
+  "cancel": "Cancel"
 }

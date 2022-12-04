@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jober/src/models/repositories/auth_repository.dart';
 import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     print('ici ca build le profile');
     final viewModel = context.watch<ProfileViewModel>();
+    final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: Center(
@@ -48,29 +50,29 @@ class ProfileView extends StatelessWidget {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Name'),
+                                  decoration: InputDecoration(
+                                      labelText: localizations.firstName),
                                   initialValue: viewModel.userFirstName,
                                   validator: viewModel.validateFirstName,
                                   onSaved: (value) =>
                                       viewModel.userFirstName = value!,
                                 ),
                                 TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Last Name'),
+                                  decoration: InputDecoration(
+                                      labelText: localizations.lastName),
                                   initialValue: viewModel.userLastName,
                                   validator: viewModel.validateLastName,
                                   onSaved: (value) =>
                                       viewModel.userLastName = value!,
                                 ),
                                 ElevatedButton(
-                                  child: Text('Save'),
+                                  child: Text(localizations.save),
                                   onPressed: () =>
                                       viewModel.validateForm(_formKey),
                                 ),
                                 const SizedBox(height: 10),
                                 ElevatedButton(
-                                  child: Text('Cancel'),
+                                  child: Text(localizations.cancel),
                                   onPressed: () => viewModel.toggleEditMode(),
                                 ),
                               ],
