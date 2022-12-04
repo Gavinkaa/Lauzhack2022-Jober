@@ -12,95 +12,105 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ProfileViewModel>();
-    final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: Center(
         child: FutureBuilder(
           builder: ((context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CircleAvatar(
-                    radius: 50,
-                    backgroundImage:
-                        AssetImage('assets/images/job_default.png'),
-                  ),
-                  const SizedBox(height: 20),
-                  ...(!viewModel.editMode
-                      ? [
-                          Text(
-                            '${viewModel.userFirstName} ${viewModel.userLastName}',
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: viewModel.toggleEditMode,
-                            child: const Text('Edit'),
-                          ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () => viewModel.signOut(context),
-                            child: const Text('Sign out'),
-                          )
-                        ]
-                      : [
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    cursorColor: Theme.of(context)
-                                        .extension<AppColors>()!
-                                        .primaryColor,
-                                    decoration: InputDecoration(
-                                        labelText: localizations.firstName),
-                                    initialValue: viewModel.userFirstName,
-                                    validator: viewModel.validateFirstName,
-                                    onSaved: (value) =>
-                                        viewModel.userFirstName = value!,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    cursorColor: Theme.of(context)
-                                        .extension<AppColors>()!
-                                        .primaryColor,
-                                    decoration: InputDecoration(
-                                        labelText: localizations.lastName),
-                                    initialValue: viewModel.userLastName,
-                                    validator: viewModel.validateLastName,
-                                    onSaved: (value) =>
-                                        viewModel.userLastName = value!,
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  child: Text(localizations.save),
-                                  onPressed: () =>
-                                      viewModel.validateForm(_formKey),
-                                ),
-                                const SizedBox(height: 10),
-                                ElevatedButton(
-                                  child: Text(localizations.cancel),
-                                  onPressed: () => viewModel.toggleEditMode(),
-                                ),
-                              ],
-                            ),
-                          )
-                        ]),
-                ],
-              );
+              return viewModel.editMode
+                  ? _buildEditProfileForm(context, viewModel)
+                  : _buildProfileView(context, viewModel);
             } else {
-              return CircularProgressIndicator.adaptive();
+              return const CircularProgressIndicator.adaptive();
             }
           }),
           future: viewModel.ensureUserProfileDefined(),
         ),
       ),
+    );
+  }
+
+  Widget _buildProfileView(BuildContext context, ProfileViewModel viewModel) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage('assets/images/job_default.png'),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          '${viewModel.userFirstName} ${viewModel.userLastName}',
+          style: const TextStyle(fontSize: 18),
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: viewModel.toggleEditMode,
+          child: const Text('Edit'),
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () => viewModel.signOut(context),
+          child: const Text('Sign out'),
+        )
+      ],
+    );
+  }
+
+  Widget _buildEditProfileForm(
+      BuildContext context, ProfileViewModel viewModel) {
+    final localizations = AppLocalizations.of(context)!;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage('assets/images/job_default.png'),
+        ),
+        const SizedBox(height: 20),
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  cursorColor:
+                      Theme.of(context).extension<AppColors>()!.primaryColor,
+                  decoration:
+                      InputDecoration(labelText: localizations.firstName),
+                  initialValue: viewModel.userFirstName,
+                  validator: viewModel.validateFirstName,
+                  onSaved: (value) => viewModel.userFirstName = value!,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  cursorColor:
+                      Theme.of(context).extension<AppColors>()!.primaryColor,
+                  decoration:
+                      InputDecoration(labelText: localizations.lastName),
+                  initialValue: viewModel.userLastName,
+                  validator: viewModel.validateLastName,
+                  onSaved: (value) => viewModel.userLastName = value!,
+                ),
+              ),
+              ElevatedButton(
+                child: Text(localizations.save),
+                onPressed: () => viewModel.validateForm(_formKey),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                child: Text(localizations.cancel),
+                onPressed: () => viewModel.toggleEditMode(),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
