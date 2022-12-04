@@ -71,14 +71,7 @@ class LoginForm extends StatelessWidget {
           const SizedBox(height: 16.0),
           AlreadyHaveAnAccountCheck(
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SignupView();
-                  },
-                ),
-              );
+              viewModel.navigateToSignUp(context);
             },
           ),
         ],

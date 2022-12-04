@@ -6,7 +6,7 @@ import 'package:jober/src/ui/widgets/already_have_an_account_acheck.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpForm extends StatelessWidget {
-  SignupViewModel viewModel;
+  SignUpViewModel viewModel;
   String email = "", password = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -70,14 +70,7 @@ class SignUpForm extends StatelessWidget {
           AlreadyHaveAnAccountCheck(
             login: false,
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return SignInView();
-                  },
-                ),
-              );
+              viewModel.navigateToSignIn(context);
             },
           ),
         ],

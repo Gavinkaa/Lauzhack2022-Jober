@@ -73,15 +73,15 @@ class NavigationView extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           label: AppLocalizations.of(context)!.profile,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.flash_on),
+          icon: const Icon(Icons.flash_on),
           label: AppLocalizations.of(context)!.match,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
+          icon: const Icon(Icons.chat),
           label: AppLocalizations.of(context)!.chat,
         ),
       ],

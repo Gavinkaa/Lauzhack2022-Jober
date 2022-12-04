@@ -7,7 +7,7 @@ import 'package:jober/src/ui/widgets/background.dart';
 class SignInView extends StatelessWidget {
   SignInView({Key? key}) : super(key: key);
   static const routeName = "/login";
-  SignInViewModel _viewModel = SignInViewModel();
+  final SignInViewModel _viewModel = SignInViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,12 @@ class SignInView extends StatelessWidget {
               const LoginScreenTopImage(),
               Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Expanded(
                     flex: 8,
                     child: LoginForm(viewModel: _viewModel),
                   ),
-                  Spacer(),
+                  const Spacer(),
                 ],
               ),
             ],

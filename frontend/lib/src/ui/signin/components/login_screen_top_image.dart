@@ -13,9 +13,9 @@ class LoginScreenTopImage extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.signIn.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 16.0 * 2),
+        const SizedBox(height: 16.0 * 2),
         Row(
           children: [
             const Spacer(),
@@ -26,7 +26,7 @@ class LoginScreenTopImage extends StatelessWidget {
             const Spacer(),
           ],
         ),
-        SizedBox(height: 16.0 * 2),
+        const SizedBox(height: 16.0 * 2),
       ],
     );
   }

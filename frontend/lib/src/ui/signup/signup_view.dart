@@ -4,10 +4,10 @@ import 'package:jober/src/ui/signup/components/signup_form.dart';
 import 'package:jober/src/ui/signup/singup_view_model.dart';
 import 'package:jober/src/ui/widgets/background.dart';
 
-class SignupView extends StatelessWidget {
-  SignupView({Key? key}) : super(key: key);
+class SignUpView extends StatelessWidget {
+  SignUpView({Key? key}) : super(key: key);
   static const routeName = "/signup";
-  SignupViewModel _viewModel = SignupViewModel();
+  SignUpViewModel _viewModel = SignUpViewModel();
 
   @override
   Widget build(BuildContext context) {
