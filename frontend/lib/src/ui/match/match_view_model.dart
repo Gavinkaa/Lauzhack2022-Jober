@@ -93,11 +93,11 @@ class MatchViewModel extends ChangeNotifier {
 
   void resetUsers() {
     _jobs = <Job>[
-          Job(name: "Name", description: "A very long descriptions that contains a lot of informations, A very long descriptions that contains a lot of informations !", level: "Level", location: "Location", skills: ["Skill1", "Skill2", "Skill3"]),
-          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"], imageUrl: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwd29ya2luZyUyMG9uJTIwY29tcHV0ZXJ8ZW58MHx8MHx8&w=1000&q=80"),
-          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"], imageUrl: "https://images.unsplash.com/photo-1622151834677-70f982c9adef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwd29ya2luZ3xlbnwwfHwwfHw%3D&w=1000&q=80"),
-          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"]),
-          Job(name: "Name2", description: "Description2", level: "Level2", location: "Location2", skills: ["Skill1", "Skill2", "Skill3"]),
+          Job(name: "Name", description: "A very long descriptions that contains a lot of informations, A very long descriptions that contains a lot of informations !", level: "Level", country: "Location", skills: ["Skill1", "Skill2", "Skill3"], companyid: 2, id: 1, postalCode: 1002),
+          Job(name: "Name2", description: "Description2", level: "Level2", country: "CH", skills: ["DART", "Skill2", "Skill3"], imageUrl: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwd29ya2luZyUyMG9uJTIwY29tcHV0ZXJ8ZW58MHx8MHx8&w=1000&q=80", companyid: 3, id: 4,postalCode: 3433),
+          Job(name: "Name2", description: "Description2", level: "Level2", country: "FR", skills: ["Skill1", "Skill2", "Skill3"], imageUrl: "https://images.unsplash.com/photo-1622151834677-70f982c9adef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwd29ya2luZ3xlbnwwfHwwfHw%3D&w=1000&q=80", companyid: 3, id: 5, postalCode: 4335),
+          Job(name: "Name2", description: "Description2", level: "Level2", country: "IT", skills: ["JAVA", "Skill2", "Skill3"], companyid: 3, id: 6, postalCode: 4335),
+          Job(name: "Name2", description: "Description2", level: "Level2", country: "DE", skills: ["Skill1", "Skill2", "Skill3"], companyid: 6, id: 90, postalCode: 5443),
           ].reversed.toList();
     notifyListeners();
   }

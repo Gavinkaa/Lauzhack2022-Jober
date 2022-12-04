@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/ui/signin/signin_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jober/src/ui/signup/singup_view_model.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
 import 'package:jober/src/ui/widgets/already_have_an_account_acheck.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpForm extends StatelessWidget {
   SignUpViewModel viewModel;

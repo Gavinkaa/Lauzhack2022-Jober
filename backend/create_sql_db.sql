@@ -84,6 +84,8 @@ CREATE TABLE Job (
     country varchar(2) NOT NULL,
     postalCode int NOT NULL,
     level varchar NOT NULL,
+    description varchar NOT NULL,
+    url varchar,
     FOREIGN KEY (level) REFERENCES Level(level),
     FOREIGN KEY (companyId) REFERENCES Company(id),
     FOREIGN KEY (country, postalCode) REFERENCES Location(country, postalCode)

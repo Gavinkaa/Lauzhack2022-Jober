@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:jober/src/models/data/user_profile.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

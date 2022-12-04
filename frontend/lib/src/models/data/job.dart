@@ -1,27 +1,36 @@
 
 class Job {
+  final int id;
+  final int companyid;
   final List<String> skills;
-  final String location;
+  final String country;
   final String name;
-  final String description;
+  final int postalCode;
   final String level;
   final String imageUrl;
+  final String description;
 
   Job({
+    required this.id,
+    required this.companyid,
     required this.skills,
-    required this.location,
+    required this.country,
     required this.name,
-    required this.description,
+    required this.postalCode,
     required this.level,
+    required this.description,
     this.imageUrl = "assets/images/job_default.png",
   });
 
   Job.fromJson(Map<String, dynamic> json) : this (
-    skills: json['skills'],
-    location: json['location'],
+    id: json['jobid'] as int,
+    companyid: json['companyid'] as int,
     name: json['name'],
-    description: json['description'],
+    country: json['country'],
+    postalCode: json['postalcode'] as int,
+    skills: (json['skills'] as List<dynamic>).cast<String>(),
     level: json['level'],
-    imageUrl: json['imageUrl'],
+    description: json['description'],
+    imageUrl: json['url'] ?? "assets/images/job_default.png",
   );
 }

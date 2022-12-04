@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jober/src/ui/profile/profile_viewmodel.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jober/src/ui/profile/profile_viewmodel.dart';
 import 'package:jober/src/ui/theme/app_colors.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
