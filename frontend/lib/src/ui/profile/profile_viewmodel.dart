@@ -7,28 +7,6 @@ class ProfileViewModel extends ChangeNotifier {
 
   final _authRepository = AuthRepository.getInstance();
 
-  bool isConnected() {
-    // not connected if authRepository user is null
-    if (_authRepository.user == null) {
-      return false;
-    } else {
-      if (_userProfile == null) {
-        getUser();
-      }
-      return true;
-    }
-  }
-
-  Future<void> signUp(String email, String password) async {
-    await _authRepository.signUp(email, password);
-    notifyListeners();
-  }
-
-  Future<void> signIn(String email, String password) async {
-    await _authRepository.signIn(email, password);
-    notifyListeners();
-  }
-
   Future<void> signOut() async {
     await _authRepository.signOut();
     _userProfile = null;
@@ -45,14 +23,14 @@ class ProfileViewModel extends ChangeNotifier {
 
   bool get editMode => _editMode;
 
-  void getUser() {
-    final userProfile = _authRepository.getUser();
+  // void getUser() {
+  //   final userProfile = _authRepository.getUser();
 
-    if (_userProfile != userProfile) {
-      _userProfile = userProfile;
-      notifyListeners();
-    }
-  }
+  //   if (_userProfile != userProfile) {
+  //     _userProfile = userProfile;
+  //     notifyListeners();
+  //   }
+  // }
 
   set userFirstName(String firstName) {
     _userProfile!.firstName = firstName;
@@ -88,7 +66,14 @@ class ProfileViewModel extends ChangeNotifier {
   void validateForm(GlobalKey<FormState> formKey) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+
+      _authRepository.pushChanges();
+
       toggleEditMode();
     }
+  }
+
+  void dougyStyle() async {
+    await _authRepository.dougyStyle();
   }
 }
