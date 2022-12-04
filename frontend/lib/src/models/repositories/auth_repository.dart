@@ -11,6 +11,7 @@ class AuthRepository {
 
   // TODO: check if useful
   User? _user;
+  UserProfile? _userProfile;
 
   AuthRepository._internal() {
     _user = supabaseClient.auth.currentUser;
@@ -31,6 +32,8 @@ class AuthRepository {
     } else {
       throw Exception('Failed to sign in');
     }
+
+    await _fetchUser();
   }
 
   Future<void> signUp(String email, String password) async {
@@ -42,6 +45,8 @@ class AuthRepository {
     } else {
       throw Exception('Failed to sign up');
     }
+
+    await _fetchUser();
   }
 
   Future<void> signOut() async {
@@ -49,7 +54,7 @@ class AuthRepository {
     _user = null;
   }
 
-  Future<UserProfile> getUser() async {
+  Future<void> _fetchUser() async {
     // final response = await Supabase.instance.client
     //     .from('profiles')
     //     .select()
@@ -64,13 +69,22 @@ class AuthRepository {
     // }
     print('USER IS: $_user');
 
-    return UserProfile(
+    _userProfile = UserProfile(
         firstName: 'FirstName', lastName: 'LastName', email: 'Email');
   }
 
-  void getUserAs() async {
-    final response = await supabaseClient.functions.invoke('getUser');
-    print(response.data['error_code']);
+  UserProfile getUser() {
+    return UserProfile(
+        firstName: 'FirstName', lastName: 'LastName', email: 'Email');
+
+    if (_userProfile == null) {
+      throw Exception('Failed to get user');
+    }
+    return _userProfile!;
+  }
+
+  Future<void> setUser(UserProfile userProfile) async {
+    // TODO
   }
 
   User? get user => _user;
