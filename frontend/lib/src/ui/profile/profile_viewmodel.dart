@@ -33,6 +33,11 @@ class ProfileViewModel extends ChangeNotifier {
 
   bool get editMode => _editMode;
 
+  Future<void> ensureUserProfileDefined() async {
+    if (_authRepository.userProfile == null) {
+      await _authRepository.fetchUser();
+    }
+  }
   // void getUser() {
   //   final userProfile = _authRepository.getUser();
 

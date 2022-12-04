@@ -3,6 +3,7 @@ import 'dart:convert';
 class UserProfile {
   String firstName;
   String lastName;
+  int age;
   final String email;
   int salary;
   List<String> skills;
@@ -13,6 +14,7 @@ class UserProfile {
   UserProfile(
       {required this.firstName,
       required this.lastName,
+      required this.age,
       required this.email,
       required this.salary,
       required this.skills,
@@ -23,6 +25,7 @@ class UserProfile {
     return UserProfile(
         firstName: json['firstname'],
         lastName: json['lastname'],
+        age: json['age'],
         email: json['email'],
         salary: json['salary'],
         skills: jsonDecode(json['skills']),

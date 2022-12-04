@@ -33,7 +33,7 @@ class AuthRepository {
       throw Exception('Failed to sign in');
     }
 
-    await _fetchUser();
+    await fetchUser();
   }
 
   Future<void> signUp(String email, String password) async {
@@ -46,7 +46,7 @@ class AuthRepository {
       throw Exception('Failed to sign up');
     }
 
-    await _fetchUser();
+    await fetchUser();
   }
 
   Future<void> signOut() async {
@@ -55,12 +55,13 @@ class AuthRepository {
     _userProfile = null;
   }
 
-  Future<void> _fetchUser() async {
+  Future<void> fetchUser() async {
     print('USER IS: $_user');
 
     _userProfile = UserProfile(
         firstName: 'John',
         lastName: 'Doe',
+        age: 20,
         email: _user!.email!,
         salary: 0,
         skills: ['Java', 'Flutter'],
@@ -71,19 +72,23 @@ class AuthRepository {
   Future<void> pushChanges() async {}
 
   Future<void> setUser(UserProfile userProfile) async {
-    // '{"salary":"6969", "firstname" : "TTT", "lastname" : "Cena", "age" : "69", "skills" : "["Java", "Python"]" }'
     final response = await supabaseClient.functions.invoke('setUser', body: {
-      'salary': 422,
+      'salary': userProfile.salary,
       'firstname': userProfile.firstName,
       'lastname': userProfile.lastName,
-      'age': 422,
+      'age': userProfile.age,
       'skills': jsonEncode(['Java']),
     });
   }
 
   Future<void> dougyStyle() async {
     final response = await supabaseClient.functions.invoke('getUserData');
+
     print(response.data);
+
+    final userProfile = UserProfile.fromJson(response.data);
+
+    print(userProfile);
   }
 
   User? get user => _user;
