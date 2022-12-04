@@ -17,6 +17,9 @@ users_uuid = ['3bfb2bd0-492b-4c6f-bf19-1e01481e1caf']
 skills = ['Java', 'Flutter', 'Dart']
 levels = ['Junior', 'Mid', 'Senior']
 job_names = ['developer', 'engineer', 'consultant', 'analyst']
+# create job descriptions, i.e array of string explaining a job
+job_descriptions = ['Goal of this job is to develop a new feature for our product', 'Build a federated Learning algorithm using PyTorch',
+                    'Develop an application using Flutter and make it cross-platform']
 Location = ['Ch', 'USA', 'FR']
 country = 'CH'
 postalCodes = [i for i in range(1000, 1004)]
@@ -71,8 +74,9 @@ def add_entries_to_job_table(supabase):
         level = random.choice(levels)
         job_name = random.choice(job_names)
         postalCode = random.choice(postalCodes)
+        desc = random.choice(job_descriptions)
         supabase.table('job').insert({'jobid': i, 'companyid': company_id,
-                                      'name': job_name, 'country': country, 'postalcode': postalCode, 'level': level}).execute()
+                                      'name': job_name, 'country': country, 'postalcode': postalCode, 'level': level, 'description': desc, 'url': 'null'}).execute()
 
 # -------------- relational tables ----------------
 
@@ -128,19 +132,19 @@ def main():
     url: str = os.environ.get('SUPABASE_URL')
     key: str = os.environ.get('SUPABASE_KEY')
     supabase: Client = create_client(url, key)
-    # add_entries_to_seeker_table(supabase)
+    add_entries_to_seeker_table(supabase)
     # add all the entries
-    # add_entries_to_skill_table(supabase)
-    # add_entries_to_level_table(supabase)
-    # add_entries_to_location_table(supabase)
+    add_entries_to_skill_table(supabase)
+    add_entries_to_level_table(supabase)
+    add_entries_to_location_table(supabase)
 
-    # add_entries_to_company_table(supabase)
-    # add_entries_to_job_table(supabase)
-    # add_entries_to_userskill_table(supabase)
+    add_entries_to_company_table(supabase)
+    add_entries_to_job_table(supabase)
+    add_entries_to_jobskill_table(supabase)
 
-    # add_entries_to_userslevel_table(supabase)
-    # add_entries_to_userslocation_table(supabase)
-    # add_entries_to_jobskill_table(supabase)
+    add_entries_to_userskill_table(supabase)
+    add_entries_to_userslevel_table(supabase)
+    add_entries_to_userslocation_table(supabase)
 
 
 if __name__ == '__main__':
